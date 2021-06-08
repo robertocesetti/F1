@@ -7,5 +7,5 @@
  * in the user manual at https://docs.gradle.org/7.0.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'it.unicam.cs.pa2021.f1'
+rootProject.name = 'F1'
 include('app')
