@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 /**
  * Interfaccia che rappresenta l'intero piano di gara.
  */
-public interface RacingPlan<P extends Position> {
+public interface RacingPlan<P extends Position, R extends RacingVehicle<P>> {
 
     /**
      * Restituisce la lista dei veicoli presenti sul tracciato.
      *
      * @return la lista dei veicoli presenti sul tracciato.
      */
-    List<RacingVehicle> getAllVehicle();
+    List<R> getAllVehicle();
 
     /**
      * Restituisce la griglia di partenza.
@@ -47,7 +47,7 @@ public interface RacingPlan<P extends Position> {
      * @param position posizione nella griglia di partenza.
      * @return true se la posizione e' corretta, false altrimenti.
      */
-    boolean addVehicle(RacingVehicle racingVehicle, P position);
+    boolean addVehicle(R racingVehicle, P position);
 
     /**
      * Restituisce tutte le posizioni raggiungibili dal veicolo.
@@ -63,7 +63,7 @@ public interface RacingPlan<P extends Position> {
      * @param racingVehicle il veicolo che vogliamo spostare.
      * @param nextPosition la posizione in cui vogliamo spostare il veicolo.
      */
-    default void toPosition(RacingVehicle<P> racingVehicle, P nextPosition) {
+    default void toPosition(R racingVehicle, P nextPosition) {
         List<Position> nearPositions = nextPositions(racingVehicle.getPosition());
         if (nearPositions.contains(nextPosition)) {
             racingVehicle.setPosition(nextPosition);
