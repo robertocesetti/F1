@@ -1,9 +1,9 @@
-package it.unicam.cs.pa2021.f1;
+package it.unicam.cs.pa2021.f1.model;
 
 /**
  * Implementazione di default di una posizione del piano di gara.
  */
-public class DefaultPosition implements Position<Integer>{
+public class DefaultPosition implements Position {
 
     private final int x;
     private final int y;

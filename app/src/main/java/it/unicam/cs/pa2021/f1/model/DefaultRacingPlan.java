@@ -1,40 +1,39 @@
-package it.unicam.cs.pa2021.f1;
+package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
-
 
 /**
  * Implementazione di default del piano gara.
  */
-public class DefaultRacingPlan implements RacingPlan<DefaultPosition, DefaultRacingVehicle> {
+public class DefaultRacingPlan implements RacingPlan {
 
-    private List<DefaultRacingVehicle> vehicles;
-    private List<DefaultPosition> grid;
-    private List<DefaultPosition> allPositions;
+    private List<RacingVehicle> vehicles;
+    private List<Position> grid;
+    private List<Position> allPositions;
 
-    public DefaultRacingPlan(List<DefaultRacingVehicle> vehicles, List<DefaultPosition> grid, List<DefaultPosition> allPositions) {
+    public DefaultRacingPlan(List<RacingVehicle> vehicles, List<Position> grid, List<Position> allPositions) {
         this.vehicles = vehicles;
         this.grid = grid;
         this.allPositions = allPositions;
     }
 
     @Override
-    public List<DefaultRacingVehicle> getAllVehicle() {
+    public List<RacingVehicle> getAllVehicle() {
         return this.vehicles;
     }
 
     @Override
-    public List<DefaultPosition> getGrid() {
+    public List<Position> getGrid() {
         return this.grid;
     }
 
     @Override
-    public List<DefaultPosition> getAllPositions() {
+    public List<Position> getAllPositions() {
         return this.allPositions;
     }
 
     @Override
-    public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, DefaultPosition position) {
+    public boolean addVehicleToGrid(RacingVehicle racingVehicle, Position position) {
         if (racingVehicle == null || position == null)
             throw new NullPointerException("Il veicolo o la poszione non possono essere nulli");
         if (!grid.contains(position))
@@ -45,13 +44,12 @@ public class DefaultRacingPlan implements RacingPlan<DefaultPosition, DefaultRac
         } catch (NullPointerException e) {
             return false;
         }
-
     }
 
     @Override
-    public void toPosition(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
+    public void toPosition(RacingVehicle racingVehicle, Position nextPosition) {
         if (racingVehicle == null || nextPosition == null) throw new NullPointerException("");
-        List<DefaultPosition> nearPositions = racingVehicle.nearPositions();
+        List<Position> nearPositions = racingVehicle.nearPositions();
         if (!nearPositions.contains(nextPosition)) throw new IllegalArgumentException();
         racingVehicle.setPosition(nextPosition);
     }

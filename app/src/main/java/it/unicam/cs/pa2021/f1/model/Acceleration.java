@@ -1,4 +1,4 @@
-package it.unicam.cs.pa2021.f1;
+package it.unicam.cs.pa2021.f1.model;
 
 public interface Acceleration<N extends Number> {
 

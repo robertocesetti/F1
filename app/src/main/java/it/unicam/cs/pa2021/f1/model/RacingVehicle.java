@@ -1,11 +1,11 @@
-package it.unicam.cs.pa2021.f1;
+package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
 
 /**
  * Interfaccia che definisce l'implementazione di un veicolo.
  */
-public interface RacingVehicle<P extends Position, A extends Acceleration> {
+public interface RacingVehicle {
 
     /**
      * Restituisce l'identificativo del veicolo.
@@ -19,35 +19,35 @@ public interface RacingVehicle<P extends Position, A extends Acceleration> {
      *
      * @return il vettore accelerazione del veicolo
      */
-    P getAcceleration();
+    Position getAcceleration();
 
     /**
      * Restituisce la posizione del veicolo.
      *
      * @return la posizione del veicolo.
      */
-    P getPosition();
+    Position getPosition();
 
     /**
      * Aggiorna la posizione del veicolo alla posizione indicata.
      *
      * @param position la nuova posizione del veicolo.
      */
-    void setPosition(P position);
+    void setPosition(Position position);
 
     /**
      * Restituisce la traiettoria del veicolo.
      *
      * @return la traiettoria del veicolo, ossia la lista delle posizioni occupate.
      */
-    List<P> getTrajectory();
+    List<Position> getTrajectory();
 
     /**
      * Aggiorna la traiettoria del veicolo aggiungendo la posizione passata.
      *
      * @param position la posizione da aggiungere alla lista di posizioni che formano la traiettoria.
      */
-    void setTrajectory(P position);
+    void setTrajectory(Position position);
 
     /**
      * Restituisce informazioni sulla posizione del veicolo che si puo' trovare
@@ -62,6 +62,6 @@ public interface RacingVehicle<P extends Position, A extends Acceleration> {
      *
      * @return la lista di posizioni raggiungibili.
      */
-    List<P> nearPositions();
+    List<Position> nearPositions();
 
 }

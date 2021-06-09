@@ -1,6 +1,4 @@
-package it.unicam.cs.pa2021.f1;
-
-import org.checkerframework.checker.units.qual.A;
+package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,35 +6,35 @@ import java.util.stream.Collectors;
 /**
  * Interfaccia che rappresenta l'intero piano di gara.
  */
-public interface RacingPlan<P extends Position, R extends RacingVehicle> {
+public interface RacingPlan {
 
     /**
      * Restituisce la lista dei veicoli presenti sul tracciato.
      *
      * @return la lista dei veicoli presenti sul tracciato.
      */
-    List<R> getAllVehicle();
+    List<RacingVehicle> getAllVehicle();
 
     /**
      * Restituisce la griglia di partenza.
      *
      * @return la griglia di partenza.
      */
-    List<P> getGrid();
+    List<Position> getGrid();
 
     /**
      * Restituisce tutte le posizioni del piano di gara.
      *
      * @return tutte le posizioni del piano di gara.
      */
-    List<P> getAllPositions();
+    List<Position> getAllPositions();
 
     /**
      * Restituisce tutte le posizioni che danno forma alla pista.
      *
      * @return tutte le posizioni che danno forma alla pista.
      */
-    default List<P> getTrackLayout() {
+    default List<Position> getTrackLayout() {
         return getAllPositions().parallelStream()
                 .filter(p -> p.getStatus().equals(StatusPosition.IN))
                 .collect(Collectors.toList());
@@ -49,7 +47,7 @@ public interface RacingPlan<P extends Position, R extends RacingVehicle> {
      * @param position      posizione nella griglia di partenza.
      * @return true se la posizione e' corretta, false altrimenti.
      */
-    boolean addVehicleToGrid(R racingVehicle, P position);
+    boolean addVehicleToGrid(RacingVehicle racingVehicle, Position position);
 
     /**
      * Effettua lo spostamento del veicolo nella posizione indicata se la posizione è accessibile.
@@ -57,5 +55,5 @@ public interface RacingPlan<P extends Position, R extends RacingVehicle> {
      * @param racingVehicle il veicolo che vogliamo spostare.
      * @param nextPosition  la posizione in cui vogliamo spostare il veicolo.
      */
-    void toPosition(R racingVehicle, P nextPosition);
+    void toPosition(RacingVehicle racingVehicle, Position nextPosition);
 }
