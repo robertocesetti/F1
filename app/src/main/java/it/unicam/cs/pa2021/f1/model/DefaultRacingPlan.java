@@ -1,6 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementazione di default del piano gara.
@@ -49,7 +50,7 @@ public class DefaultRacingPlan implements RacingPlan {
     @Override
     public void toPosition(RacingVehicle racingVehicle, Position nextPosition) {
         if (racingVehicle == null || nextPosition == null) throw new NullPointerException("");
-        List<Position> nearPositions = racingVehicle.nearPositions();
+        Set<Position> nearPositions = racingVehicle.nearPositions();
         if (!nearPositions.contains(nextPosition)) throw new IllegalArgumentException();
         racingVehicle.setPosition(nextPosition);
     }

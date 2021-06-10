@@ -3,7 +3,7 @@ package it.unicam.cs.pa2021.f1.model;
 /**
  * Implementazione di default dell'accelerazione di un veicolo.
  */
-public class DefaultAcceleration implements Acceleration<Number>{
+public class DefaultAcceleration implements Acceleration<Integer>{
 
     private int x;
     private int y;
@@ -19,7 +19,7 @@ public class DefaultAcceleration implements Acceleration<Number>{
     }
 
     @Override
-    public Number getY() {
+    public Integer getY() {
         return this.y;
     }
 }

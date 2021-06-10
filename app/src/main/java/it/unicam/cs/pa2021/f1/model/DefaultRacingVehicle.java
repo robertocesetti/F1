@@ -1,52 +1,53 @@
 package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementazioni di default di un veicolo da corsa.
  */
-public class DefaultRacingVehicle implements RacingVehicle {
+public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosition> {
 
     private final int id;
-    private Position position;
-    private List<Position> trajectory;
-    private Acceleration acceleration;
+    private DefaultPosition position;
+    private List<DefaultPosition> trajectory;
+    private DefaultAcceleration acceleration;
 
-    public DefaultRacingVehicle(int id, Position position) {
+    public DefaultRacingVehicle(int id, DefaultPosition position) {
         this.id = id;
         this.setPosition(position);
         this.acceleration = new DefaultAcceleration(0,0);
     }
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
     @Override
-    public Position getAcceleration() {
-        return null;
+    public Acceleration<Integer> getAcceleration() {
+        return this.acceleration;
     }
 
     @Override
-    public Position getPosition() {
+    public DefaultPosition getPosition() {
         return this.position;
     }
 
     @Override
-    public void setPosition(Position position) {
-        if(position == null) throw new IllegalArgumentException("La posizione passata non e' valida");
+    public void setPosition(DefaultPosition position) {
+        if(position == null) throw new IllegalArgumentException("La posizione che si vuole raggiungere non e' valida");
         this.position = position;
         this.setTrajectory(position);
     }
 
     @Override
-    public List<Position> getTrajectory() {
+    public List<DefaultPosition> getTrajectory() {
         return this.trajectory;
     }
 
     @Override
-    public void setTrajectory(Position position) {
+    public void setTrajectory(DefaultPosition position) {
         this.trajectory.add(position);
     }
 
@@ -56,7 +57,7 @@ public class DefaultRacingVehicle implements RacingVehicle {
     }
 
     @Override
-    public List<Position> nearPositions() {
-       return null;
+    public Set<DefaultPosition> nearPositions() {
+       return this.position.getNearPositions(this.acceleration);
     }
 }
