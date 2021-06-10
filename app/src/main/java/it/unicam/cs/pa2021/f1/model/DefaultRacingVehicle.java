@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Implementazioni di default di un veicolo da corsa.
  */
-public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosition> {
+public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosition, DefaultAcceleration> {
 
     private final int id;
     private DefaultPosition position;
@@ -25,9 +25,10 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public Acceleration<Integer> getAcceleration() {
-        return this.acceleration;
-    }
+    public DefaultAcceleration getAcceleration() { return this.acceleration; }
+
+    @Override
+    public void setAcceleration(DefaultAcceleration acceleration) { this.acceleration = acceleration; }
 
     @Override
     public DefaultPosition getPosition() {
@@ -38,7 +39,7 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     public void setPosition(DefaultPosition position) {
         if(position == null) throw new IllegalArgumentException("La posizione che si vuole raggiungere non e' valida");
         this.position = position;
-        this.setTrajectory(position);
+        this.updateTrajectory(position);
     }
 
     @Override
@@ -47,7 +48,10 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public void setTrajectory(DefaultPosition position) {
+    public void setTrajectory(List<DefaultPosition> trajectory) { this.trajectory = trajectory; }
+
+    @Override
+    public void updateTrajectory(DefaultPosition position) {
         this.trajectory.add(position);
     }
 

@@ -10,16 +10,30 @@ package it.unicam.cs.pa2021.f1.model;
 public interface Acceleration<N> {
 
     /**
-     * Indica lo spostamento verticale di un veicolo.
+     * Restituisce lo spostamento orizzonatale di un veicolo.
      *
-     * @return lo spostamento verticale di un veicolo.
+     * @return lo spostamento orizzontale di un veicolo.
      */
     N getX();
 
     /**
-     * Indica lo spostamento orizzontale di un veicolo.
+     * Aggiorna lo spostamento orizzontale di un veicolo.
      *
-     * @return lo spostamento orizzontale di un veicolo.
+     * @param x lo spostamento orizzontale di un veicolo.
+     */
+    void setX(N x);
+
+    /**
+     * Restituisce lo spostamento verticale di un veicolo.
+     *
+     * @return lo spostamento verticale di un veicolo.
      */
     N getY();
+
+    /**
+     * Aggiorna lo spostamento verticale di un veicolo.
+     *
+     * @param y lo spostamento orizzontale di un veicolo.
+     */
+    void setY(N y);
 }

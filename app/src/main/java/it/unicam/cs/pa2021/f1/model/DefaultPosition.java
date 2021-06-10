@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Implementazione di default di una posizione del piano di gara.
  */
-public class DefaultPosition implements Position {
+public class DefaultPosition implements Position<StatusPosition> {
 
     private final int x;
     private final int y;

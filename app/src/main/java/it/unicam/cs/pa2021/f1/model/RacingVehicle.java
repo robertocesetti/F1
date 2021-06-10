@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Interfaccia che definisce l'implementazione di un veicolo.
  */
-public interface RacingVehicle<N, P> {
+public interface RacingVehicle<N, P, A> {
 
     /**
      * Restituisce l'identificativo del veicolo.
@@ -20,7 +20,14 @@ public interface RacingVehicle<N, P> {
      *
      * @return l'accelerazione del veicolo.
      */
-    Acceleration<N> getAcceleration();
+    A getAcceleration();
+
+    /**
+     * Imposta l'accelerazione dell'auto all'accelerazione passata.
+     *
+     * @param acceleration l'accelerazione che deve essere impostata al veicolo.
+     */
+    void setAcceleration(A acceleration);
 
     /**
      * Restituisce la posizione del veicolo.
@@ -44,11 +51,18 @@ public interface RacingVehicle<N, P> {
     List<P> getTrajectory();
 
     /**
+     * Imposta la traiettoria alla lista di posizioni passata.
+     *
+     * @param trajectory la lista di posizioni passata.
+     */
+    void setTrajectory(List<DefaultPosition> trajectory);
+
+    /**
      * Aggiorna la traiettoria del veicolo aggiungendo la posizione passata.
      *
      * @param position la posizione da aggiungere alla lista di posizioni che formano la traiettoria.
      */
-    void setTrajectory(P position);
+    void updateTrajectory(P position);
 
     /**
      * Restituisce informazioni sulla posizione del veicolo che si puo' trovare
