@@ -9,6 +9,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    // plugin di javafx
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 repositories {
@@ -27,4 +29,9 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass = 'it.unicam.cs.pa2021.f1.App'
+}
+
+javafx {
+    version = "14"
+    modules = [ 'javafx.controls' ]
 }
