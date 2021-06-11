@@ -45,7 +45,7 @@ public interface RacingPlan<R, P> {
     boolean addVehicleToGrid(R racingVehicle, P position);
 
     /**
-     * Effettua lo spostamento del veicolo nella posizione indicata se la posizione è accessibile.
+     * Effettua lo spostamento del veicolo nella posizione indicata se la posizione e' accessibile.
      *
      * @param racingVehicle il veicolo che vogliamo spostare.
      * @param nextPosition  la posizione in cui vogliamo spostare il veicolo.
