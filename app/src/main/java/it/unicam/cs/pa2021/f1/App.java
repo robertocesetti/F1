@@ -3,12 +3,20 @@
  */
 package it.unicam.cs.pa2021.f1;
 
+import it.unicam.cs.pa2021.f1.controller.TrackFileReader;
+import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
+
+import java.io.FileNotFoundException;
+
 public class App {
+
     public String getGreeting() {
         return "Hello World!";
     }
 
+
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        TrackFileReader tcr = new TrackFileReader();
+
     }
 }

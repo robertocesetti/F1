@@ -13,10 +13,24 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     private List<DefaultPosition> grid;
     private List<DefaultPosition> allPositions;
 
-    public DefaultRacingPlan(List<DefaultRacingVehicle> vehicles, List<DefaultPosition> grid, List<DefaultPosition> allPositions) {
-        this.vehicles = vehicles;
-        this.grid = grid;
-        this.allPositions = allPositions;
+    private  int height;
+    private  int width;
+    private  List<StatusPosition> statusPositions;
+
+    public DefaultRacingPlan(int height, int width, List<StatusPosition> statusPositions) {
+        this.height = height;
+        this.width = width;
+        //TODO Unire la lista delle posizioni con quella degli stati.
+
+    }
+
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     @Override
@@ -30,16 +44,28 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     @Override
+    public List<StatusPosition>  getStatusPositions() { return this.statusPositions;  }
+
+    @Override
     public List<DefaultPosition> getAllPositions() {
+        int y = this.height;
+        int x = 0;
+        while (y >= 0) {
+            while (x <= this.width) {
+                this.allPositions.add(new DefaultPosition(x, y));
+                x++;
+            }
+            y --;
+            x = 0;
+        }
         return this.allPositions;
     }
 
-    @Override
-    public List<DefaultPosition> getTrackLayout() {
-        return getAllPositions().parallelStream()
-                .filter(p -> p.getStatus().equals(StatusPosition.IN))
-                .collect(Collectors.toList());
+    public List<DefaultPosition> getTrackPositions() {
+        return this.allPositions.stream().filter(p -> p.getStatus().equals(StatusPosition.IN)).collect(Collectors.toList());
     }
+
+
 
     @Override
     public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, DefaultPosition position) {

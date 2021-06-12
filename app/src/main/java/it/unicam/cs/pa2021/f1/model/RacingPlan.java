@@ -8,6 +8,20 @@ import java.util.List;
 public interface RacingPlan<R, P> {
 
     /**
+     * Restituisce l'altezza del piano gara.
+     *
+     * @return l'altezza del piano gara.
+     */
+    int getHeight();
+
+    /**
+     * Restituisce la larghezza del piano gara.
+     *
+     * @return la larghezza del piano gara.
+     */
+    int getWidth();
+
+    /**
      * Restituisce la lista dei veicoli presenti sul tracciato.
      *
      * @return la lista dei veicoli presenti sul tracciato.
@@ -33,7 +47,7 @@ public interface RacingPlan<R, P> {
      *
      * @return tutte le posizioni che danno forma alla pista.
      */
-    List<P> getTrackLayout();
+    List<StatusPosition>  getStatusPositions();
 
     /**
      * Aggiunge un veicolo in una posizione nella griglia di partenza.

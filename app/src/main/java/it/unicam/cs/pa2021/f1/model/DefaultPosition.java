@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Implementazione di default di una posizione del piano di gara.
  */
-public class DefaultPosition implements Position<StatusPosition> {
+public class DefaultPosition implements Position<StatusPosition, DefaultPosition> {
 
     private final int x;
     private final int y;
@@ -30,6 +30,12 @@ public class DefaultPosition implements Position<StatusPosition> {
     @Override
     public StatusPosition getStatus() {
         return this.statusPosition;
+    }
+
+    @Override
+    public DefaultPosition setStatus(StatusPosition status) {
+        this.statusPosition = status;
+        return this;
     }
 
 
@@ -65,10 +71,11 @@ public class DefaultPosition implements Position<StatusPosition> {
 
     public Optional<DefaultPosition> belowRight(int x, int y) { return near (x,y, +1, -1); }
 
-
+//TODO Controllo
     private Optional<DefaultPosition> near (int x, int y, int dirX, int dirY){
         int newX = x+dirX;
         int newY = y+dirY;
-        return Optional.of(new DefaultPosition(newX,newY));
+        return null;
+        //Optional.of(new DefaultPosition(newX,newY));
     }
 }

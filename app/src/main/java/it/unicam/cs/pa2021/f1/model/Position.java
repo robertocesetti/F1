@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Interfaccia che definisce l'implementazione di una posizione del tracciato.
  */
-public interface Position<S> {
+public interface Position<S, P> {
 
     /**
      * Restituisce lo stato di una posizione del tracciato
@@ -14,5 +14,12 @@ public interface Position<S> {
      * @return lo stato della posizione.
      */
     S getStatus();
+
+    /**
+     * Aggiorna il valore dello stato al valore passato.
+     *
+     * @param status il nuovo valore dello stato.
+     */
+    P setStatus(S status);
 
 }
