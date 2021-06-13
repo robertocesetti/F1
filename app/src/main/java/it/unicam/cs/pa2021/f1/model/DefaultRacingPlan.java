@@ -50,7 +50,6 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, DefaultPosition position) {
         if (racingVehicle == null || position == null)

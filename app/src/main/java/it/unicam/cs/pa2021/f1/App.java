@@ -4,9 +4,6 @@
 package it.unicam.cs.pa2021.f1;
 
 import it.unicam.cs.pa2021.f1.controller.TrackFileReader;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
-
-import java.io.FileNotFoundException;
 
 public class App {
 

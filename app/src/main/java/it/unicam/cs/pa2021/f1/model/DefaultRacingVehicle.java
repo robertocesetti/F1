@@ -61,7 +61,6 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
         return getPosition().getStatus().equals(StatusPosition.OUT);
     }
 
-
     @Override
     public Set<DefaultPosition> nearPositions() {
        return null; //TODO this.position.getNearPositions(this.acceleration);
