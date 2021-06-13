@@ -11,16 +11,15 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
 
     private List<DefaultRacingVehicle> vehicles;
     private List<DefaultPosition> grid;
-    private List<DefaultPosition> allPositions;
 
-    private  int height;
-    private  int width;
-    private  List<StatusPosition> statusPositions;
+    private final int height;
+    private final int width;
+    private final List<DefaultPosition> allPositions;
 
-    public DefaultRacingPlan(int height, int width, List<StatusPosition> statusPositions) {
+    public DefaultRacingPlan(int height, int width, List<DefaultPosition> allPositions) {
         this.height = height;
         this.width = width;
-        //TODO Unire la lista delle posizioni con quella degli stati.
+        this.allPositions = allPositions;
 
     }
 
@@ -42,9 +41,6 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     public List<DefaultPosition> getGrid() {
         return this.grid;
     }
-
-    @Override
-    public List<StatusPosition>  getStatusPositions() { return this.statusPositions;  }
 
     @Override
     public List<DefaultPosition> getAllPositions() {

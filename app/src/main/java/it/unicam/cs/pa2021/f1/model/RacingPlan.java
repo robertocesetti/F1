@@ -43,13 +43,6 @@ public interface RacingPlan<R, P> {
     List<P> getAllPositions();
 
     /**
-     * Restituisce tutte le posizioni che danno forma alla pista.
-     *
-     * @return tutte le posizioni che danno forma alla pista.
-     */
-    List<StatusPosition>  getStatusPositions();
-
-    /**
      * Aggiunge un veicolo in una posizione nella griglia di partenza.
      *
      * @param racingVehicle veicolo che viene aggiunta.

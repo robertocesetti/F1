@@ -40,7 +40,7 @@ public class TrackFileReader implements TrackReader {
                 else throw new IllegalArgumentException("Il file contiene dati errati");
             }
         }
-        new DefaultRacingPlan(planHeight, planWidth, statusPositions);
+
     }
 
 }
