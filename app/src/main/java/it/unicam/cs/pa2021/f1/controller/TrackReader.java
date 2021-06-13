@@ -1,8 +1,6 @@
 package it.unicam.cs.pa2021.f1.controller;
 
-
 import java.io.FileNotFoundException;
-
 
 /**
  * Interfaccia che definisce il salvataggio del tracciato da una sorgente esterna.

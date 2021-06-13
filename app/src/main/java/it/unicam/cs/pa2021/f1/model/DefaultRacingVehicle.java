@@ -13,9 +13,10 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     private List<DefaultPosition> trajectory;
     private DefaultAcceleration acceleration;
 
-    public DefaultRacingVehicle(int id, DefaultPosition position) {
+    public DefaultRacingVehicle(int id, DefaultPosition position, List<DefaultPosition> trajectory) {
         this.id = id;
-        this.setPosition(position);
+        this.position = position;
+        this.trajectory = trajectory;
         this.acceleration = new DefaultAcceleration(0,0);
     }
 
@@ -60,8 +61,10 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
         return getPosition().getStatus().equals(StatusPosition.OUT);
     }
 
+
     @Override
     public Set<DefaultPosition> nearPositions() {
-       return this.position.getNearPositions(this.acceleration);
+       return null; //TODO this.position.getNearPositions(this.acceleration);
     }
+
 }

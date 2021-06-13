@@ -15,7 +15,6 @@ import java.util.Scanner;
  */
 public class TrackFileReader implements TrackReader {
 
-
     public TrackFileReader() {
     }
 
@@ -25,22 +24,7 @@ public class TrackFileReader implements TrackReader {
      * 0 -> fuori pista.
      */
     public void readFile() throws FileNotFoundException {
-        int planHeight = 0;
-        int planWidth = 0;
-        List<StatusPosition> statusPositions = new ArrayList<>();
-        File plan = new File("D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\track.txt");
-        Scanner scanner = new Scanner(plan);
-        while (scanner.hasNextLine()) {
-            char[] line = scanner.nextLine().toCharArray();
-            planWidth = line.length;
-            planHeight++;
-            for (char c : line) {
-                if (c == 0) statusPositions.add(StatusPosition.OUT);
-                else if (c == 1) statusPositions.add(StatusPosition.IN);
-                else throw new IllegalArgumentException("Il file contiene dati errati");
-            }
-        }
-
+    //TODO
     }
 
 }

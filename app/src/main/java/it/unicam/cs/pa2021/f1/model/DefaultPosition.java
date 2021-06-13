@@ -14,9 +14,10 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
     private final int y;
     private StatusPosition statusPosition;
 
-    public DefaultPosition(int x, int y) {
+    public DefaultPosition(int x, int y, StatusPosition statusPosition) {
         this.x = x;
         this.y = y;
+        this.statusPosition = statusPosition;
     }
 
     public int getX() {
@@ -38,7 +39,7 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
         return this;
     }
 
-
+/**
     public Set<DefaultPosition> getNearPositions(DefaultAcceleration acceleration) {
         int traslateX = this.x + acceleration.getX();
         int traslateY = this.y + acceleration.getY();
@@ -71,11 +72,13 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
 
     public Optional<DefaultPosition> belowRight(int x, int y) { return near (x,y, +1, -1); }
 
-//TODO Controllo
+     TODO Controllo
+
     private Optional<DefaultPosition> near (int x, int y, int dirX, int dirY){
         int newX = x+dirX;
         int newY = y+dirY;
         return null;
         //Optional.of(new DefaultPosition(newX,newY));
     }
+ **/
 }

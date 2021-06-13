@@ -23,14 +23,16 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
 
     }
 
-
+    @Override
     public int getHeight() {
         return height;
     }
 
-    public int getWidth() {
-        return width;
-    }
+    @Override
+    public int getWidth() { return width; }
+
+    @Override
+    public List<DefaultPosition> getAllPositions() { return this.allPositions; }
 
     @Override
     public List<DefaultRacingVehicle> getAllVehicle() {
@@ -42,25 +44,11 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         return this.grid;
     }
 
-    @Override
-    public List<DefaultPosition> getAllPositions() {
-        int y = this.height;
-        int x = 0;
-        while (y >= 0) {
-            while (x <= this.width) {
-                this.allPositions.add(new DefaultPosition(x, y));
-                x++;
-            }
-            y --;
-            x = 0;
-        }
-        return this.allPositions;
-    }
-
     public List<DefaultPosition> getTrackPositions() {
-        return this.allPositions.stream().filter(p -> p.getStatus().equals(StatusPosition.IN)).collect(Collectors.toList());
+        return this.allPositions.stream()
+                .filter(p -> p.getStatus().equals(StatusPosition.IN))
+                .collect(Collectors.toList());
     }
-
 
 
     @Override

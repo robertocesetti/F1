@@ -22,6 +22,13 @@ public interface RacingPlan<R, P> {
     int getWidth();
 
     /**
+     * Restituisce tutte le posizioni del piano di gara.
+     *
+     * @return tutte le posizioni del piano di gara.
+     */
+    List<P> getAllPositions();
+
+    /**
      * Restituisce la lista dei veicoli presenti sul tracciato.
      *
      * @return la lista dei veicoli presenti sul tracciato.
@@ -34,13 +41,6 @@ public interface RacingPlan<R, P> {
      * @return la griglia di partenza.
      */
     List<P> getGrid();
-
-    /**
-     * Restituisce tutte le posizioni del piano di gara.
-     *
-     * @return tutte le posizioni del piano di gara.
-     */
-    List<P> getAllPositions();
 
     /**
      * Aggiunge un veicolo in una posizione nella griglia di partenza.
