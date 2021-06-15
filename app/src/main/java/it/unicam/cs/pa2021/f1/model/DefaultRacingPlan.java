@@ -75,7 +75,7 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
                 .filter(p -> p.getStatus().equals(StatusPosition.GRID))
                 .collect(Collectors.toList());
     }
-
+    
     /**
      * Restituisce le posizioni della pista ossia il tracciato.
      *
@@ -143,7 +143,7 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         }
         switch (position.getStatus()) {
             case IN:
-                System.out.print("=  ");
+                System.out.print("-  ");
                 break;
             case GRID:
                 System.out.print("G  ");

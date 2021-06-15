@@ -18,7 +18,7 @@ import static java.awt.Color.*;
 /**
  * Implementazione della creazione di un piano di gara ottenuto dalla lettura di un file.
  */
-public class RPlanFileReader implements RPlanReader<Integer> {
+public class FileReader implements RacingPlanReader<Integer> {
 
     private final List<DefaultPosition> trackPositions = new LinkedList<>();
 
@@ -33,11 +33,11 @@ public class RPlanFileReader implements RPlanReader<Integer> {
     /**
      * Costruttore del lettore del file passato.
      */
-    public RPlanFileReader() {
+    public FileReader() {
         try {
             // Salvataggio dell'immagine dal file
             BufferedImage image = ImageIO.read(new File("D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\RacingPlan.png"));
-            RPlanPositions(image.getHeight(), image.getWidth());
+            RacingPlanPositions(image.getHeight(), image.getWidth());
             racingPlan = new DefaultRacingPlan(image.getHeight(),image.getWidth(), this.setStatusPositionByImage(image));
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class RPlanFileReader implements RPlanReader<Integer> {
     }
 
     @Override
-    public void RPlanPositions(Integer height, Integer width) {
+    public void RacingPlanPositions(Integer height, Integer width) {
         int y = height - 1;
         int x = 0;
         while (y >= 0) {

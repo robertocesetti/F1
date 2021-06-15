@@ -3,7 +3,7 @@
  */
 package it.unicam.cs.pa2021.f1;
 
-import it.unicam.cs.pa2021.f1.controller.RPlanFileReader;
+import it.unicam.cs.pa2021.f1.controller.FileReader;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
 
@@ -15,7 +15,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        RPlanFileReader tcr = new RPlanFileReader();
+        FileReader tcr = new FileReader();
         DefaultRacingPlan racingPlan =  tcr.getRacingPlan();
         DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
         DefaultRacingVehicle drv = new DefaultRacingVehicle(2);
