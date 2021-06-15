@@ -8,6 +8,12 @@ public class DefaultAcceleration implements Acceleration<Integer> {
     private int x;
     private int y;
 
+    /**
+     * Costruttore del vettore accelerazione.
+     *
+     * @param x coordinata x del vettore.
+     * @param y coordinata y del vettore.
+     */
     public DefaultAcceleration(int x, int y) {
         this.x = x;
         this.y = y;

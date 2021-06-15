@@ -23,7 +23,7 @@ public interface RacingVehicle<N, P, A> {
     A getAcceleration();
 
     /**
-     * Imposta l'accelerazione dell'auto all'accelerazione passata.
+     * Imposta l'accelerazione del veicolo all'accelerazione passata.
      *
      * @param acceleration l'accelerazione che deve essere impostata al veicolo.
      */

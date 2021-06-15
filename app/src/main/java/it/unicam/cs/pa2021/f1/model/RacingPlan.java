@@ -1,6 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interfaccia che rappresenta l'intero piano di gara.
@@ -29,11 +30,19 @@ public interface RacingPlan<R, P> {
     List<P> getAllPositions();
 
     /**
-     * Restituisce la lista dei veicoli presenti sul tracciato.
+     * Restituisce la lista dei veicoli presenti sul piano di gara.
      *
-     * @return la lista dei veicoli presenti sul tracciato.
+     * @return la lista dei veicoli presenti sul piano di gara.
      */
-    List<R> getAllVehicle();
+    List<R> getAllVehicles();
+
+    /**
+     * Controlla se la posizione passata e' occupata.
+     *
+     * @param position la posizione che vogliamo sapere se e' occupata.
+     * @return il veicolo che la occupa eventualmente.
+     */
+    Optional<R> isBusy(P position);
 
     /**
      * Restituisce la griglia di partenza.
@@ -43,13 +52,14 @@ public interface RacingPlan<R, P> {
     List<P> getGrid();
 
     /**
-     * Aggiunge un veicolo in una posizione nella griglia di partenza.
+     * Aggiunge un veicolo sulla griglia di partenza, nello specifico nella posizione indicata
+     * (primo = 1, secondo = 2 ...).
      *
-     * @param racingVehicle veicolo che viene aggiunta.
-     * @param position      posizione nella griglia di partenza.
-     * @return true se la posizione e' corretta, false altrimenti.
+     * @param racingVehicle il veicolo da corsa da aggiungere.
+     * @param gridPosition la posizione di partenza sulla griglia.
+     * @return true se il veicolo e' stato aggiunto correttamente, false altrimenti.
      */
-    boolean addVehicleToGrid(R racingVehicle, P position);
+    boolean addVehicleToGrid(R racingVehicle, int gridPosition);
 
     /**
      * Effettua lo spostamento del veicolo nella posizione indicata se la posizione e' accessibile.
@@ -57,5 +67,5 @@ public interface RacingPlan<R, P> {
      * @param racingVehicle il veicolo che vogliamo spostare.
      * @param nextPosition  la posizione in cui vogliamo spostare il veicolo.
      */
-    void toPosition(R racingVehicle, P nextPosition);
+    void moveRacingVehicle(R racingVehicle, P nextPosition);
 }

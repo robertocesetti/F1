@@ -14,16 +14,31 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
     private final int y;
     private StatusPosition statusPosition;
 
-    public DefaultPosition(int x, int y, StatusPosition statusPosition) {
+    /**
+     * Costruttore di una  poszione.
+     *
+     * @param y la coordinata sull'asse delle y.
+     * @param x la coordinata sull'asse delle x.
+     */
+    public DefaultPosition( int y, int x ) {
         this.x = x;
         this.y = y;
-        this.statusPosition = statusPosition;
     }
 
+    /**
+     * Restituisce la coordinata sull'asse delle x.
+     *
+     * @return la coordinata sull'asse delle x.
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * Restituisce la coordinata sull'asse delle y.
+     *
+     * @return la coordinata sull'asse delle y.
+     */
     public int getY() {
         return this.y;
     }
@@ -39,7 +54,7 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
         return this;
     }
 
-/**
+/*
     public Set<DefaultPosition> getNearPositions(DefaultAcceleration acceleration) {
         int traslateX = this.x + acceleration.getX();
         int traslateY = this.y + acceleration.getY();
@@ -80,5 +95,5 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
         return null;
         //Optional.of(new DefaultPosition(newX,newY));
     }
- **/
+ */
 }

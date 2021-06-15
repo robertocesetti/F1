@@ -3,7 +3,9 @@
  */
 package it.unicam.cs.pa2021.f1;
 
-import it.unicam.cs.pa2021.f1.controller.TrackFileReader;
+import it.unicam.cs.pa2021.f1.controller.RPlanFileReader;
+import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
+import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
 
 public class App {
 
@@ -13,7 +15,15 @@ public class App {
 
 
     public static void main(String[] args) {
-        TrackFileReader tcr = new TrackFileReader();
+        RPlanFileReader tcr = new RPlanFileReader();
+        DefaultRacingPlan racingPlan =  tcr.getRacingPlan();
+        DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
+        DefaultRacingVehicle drv = new DefaultRacingVehicle(2);
+        DefaultRacingVehicle rrv = new DefaultRacingVehicle(3);
+        racingPlan.addVehicleToGrid(rv, 3);
+        racingPlan.addVehicleToGrid(drv, 2);
+        racingPlan.addVehicleToGrid(rrv, 1);
+        racingPlan.printRacingPlanConsole();
 
     }
 }

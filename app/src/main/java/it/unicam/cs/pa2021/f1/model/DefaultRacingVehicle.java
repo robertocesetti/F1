@@ -13,11 +13,14 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     private List<DefaultPosition> trajectory;
     private DefaultAcceleration acceleration;
 
-    public DefaultRacingVehicle(int id, DefaultPosition position, List<DefaultPosition> trajectory) {
+    /**
+     * Costruttore di un veicolo da corsa.
+     *
+     * @param id l'identificativo del veicolo.
+     */
+    public DefaultRacingVehicle(int id) {
         this.id = id;
-        this.position = position;
-        this.trajectory = trajectory;
-        this.acceleration = new DefaultAcceleration(0,0);
+        this.acceleration = new DefaultAcceleration(0, 0);
     }
 
     @Override
@@ -26,10 +29,14 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public DefaultAcceleration getAcceleration() { return this.acceleration; }
+    public DefaultAcceleration getAcceleration() {
+        return this.acceleration;
+    }
 
     @Override
-    public void setAcceleration(DefaultAcceleration acceleration) { this.acceleration = acceleration; }
+    public void setAcceleration(DefaultAcceleration acceleration) {
+        this.acceleration = acceleration;
+    }
 
     @Override
     public DefaultPosition getPosition() {
@@ -37,10 +44,10 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public void setPosition(DefaultPosition position) {
-        if(position == null) throw new IllegalArgumentException("La posizione che si vuole raggiungere non e' valida");
+    public void setPosition(DefaultPosition position) throws NullPointerException {
+        if (position == null) throw new NullPointerException("La posizione che si vuole raggiungere non e' valida");
+        if (this.position != null) this.updateTrajectory(this.position);
         this.position = position;
-        this.updateTrajectory(position);
     }
 
     @Override
@@ -49,11 +56,13 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public void setTrajectory(List<DefaultPosition> trajectory) { this.trajectory = trajectory; }
+    public void setTrajectory(List<DefaultPosition> trajectory) {
+        this.trajectory = trajectory;
+    }
 
     @Override
     public void updateTrajectory(DefaultPosition position) {
-        this.trajectory.add(position);
+        if (position != null) this.trajectory.add(position);
     }
 
     @Override
@@ -63,7 +72,7 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
 
     @Override
     public Set<DefaultPosition> nearPositions() {
-       return null; //TODO this.position.getNearPositions(this.acceleration);
+        return null; //TODO this.position.getNearPositions(this.acceleration);
     }
 
 }

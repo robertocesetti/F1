@@ -1,6 +1,8 @@
 package it.unicam.cs.pa2021.f1.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,18 +11,25 @@ import java.util.stream.Collectors;
  */
 public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, DefaultPosition> {
 
-    private List<DefaultRacingVehicle> vehicles;
-    private List<DefaultPosition> grid;
-
     private final int height;
     private final int width;
     private final List<DefaultPosition> allPositions;
+    private final List<DefaultRacingVehicle> allVehicles;
+    private List<DefaultPosition> grid;
 
+    /**
+     * Costruttore di un piano di gara.
+     *
+     * @param height l'altezza del piano di gara.
+     * @param width la larghezza del piano di gara.
+     * @param allPositions tutte le posizioni del piano di gara.
+     */
     public DefaultRacingPlan(int height, int width, List<DefaultPosition> allPositions) {
         this.height = height;
         this.width = width;
         this.allPositions = allPositions;
-
+        this.allVehicles = new ArrayList<>();
+        this.createGrid();
     }
 
     @Override
@@ -29,14 +38,28 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     @Override
-    public int getWidth() { return width; }
+    public int getWidth() {
+        return width;
+    }
 
     @Override
-    public List<DefaultPosition> getAllPositions() { return this.allPositions; }
+    public List<DefaultPosition> getAllPositions() {
+        return this.allPositions;
+    }
+
+    public Optional<DefaultPosition> getPosition(int x, int y) {
+        return allPositions.stream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
+
+    }
 
     @Override
-    public List<DefaultRacingVehicle> getAllVehicle() {
-        return this.vehicles;
+    public List<DefaultRacingVehicle> getAllVehicles() {
+        return this.allVehicles;
+    }
+
+   @Override
+    public Optional<DefaultRacingVehicle> isBusy(DefaultPosition position) {
+        return allVehicles.stream().filter(rc -> rc.getPosition().equals(position)).findFirst();
     }
 
     @Override
@@ -44,20 +67,37 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         return this.grid;
     }
 
-    public List<DefaultPosition> getTrackPositions() {
+    /**
+     * Crea la griglia di partenza del tracciato.
+     */
+    private void createGrid() {
+        this.grid = this.allPositions.stream()
+                .filter(p -> p.getStatus().equals(StatusPosition.GRID))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Restituisce le posizioni della pista ossia il tracciato.
+     *
+     * @return le posizioni della pista ossia il tracciato.
+     */
+    public List<DefaultPosition> trackPositions() {
         return this.allPositions.stream()
                 .filter(p -> p.getStatus().equals(StatusPosition.IN))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, DefaultPosition position) {
-        if (racingVehicle == null || position == null)
-            throw new NullPointerException("Il veicolo o la poszione non possono essere nulli");
-        if (!grid.contains(position))
-            throw new IllegalArgumentException("La posizione inserita non fa parte della griglia");
+    public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, int gridPosition) throws NullPointerException, IllegalArgumentException {
+        if (racingVehicle == null)
+            throw new NullPointerException("Il veicolo non puo' essere nullo");
+        if (grid.size() < gridPosition || gridPosition <= 0)
+            throw new IllegalArgumentException("La griglia non ha la posizione di partenza indicata");
         try {
-            racingVehicle.setPosition(position);
+            if (this.isBusy(this.grid.get(gridPosition - 1)).isPresent())
+                throw new IllegalArgumentException("La posizione " + gridPosition + " e' gia' occupata");
+            racingVehicle.setPosition(this.grid.get(gridPosition - 1));
+            allVehicles.add(racingVehicle);
             return true;
         } catch (NullPointerException e) {
             return false;
@@ -65,11 +105,51 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     @Override
-    public void toPosition(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
+    public void moveRacingVehicle(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
         if (racingVehicle == null || nextPosition == null) throw new NullPointerException("");
         Set<DefaultPosition> nearPositions = racingVehicle.nearPositions();
         if (!nearPositions.contains(nextPosition)) throw new IllegalArgumentException();
         racingVehicle.setPosition(nextPosition);
     }
 
+    /**
+     * Stampa sulla console il piano di gara.
+     */
+    public void printRacingPlanConsole() {
+        int y = this.height - 1;
+        int x = 0;
+        while (y >= 0) {
+            while (x < width) {
+                Optional<DefaultPosition> position = getPosition(x, y);
+                position.ifPresent(this::drawRacingPlanPositions);
+                x++;
+            }
+            System.out.print("\n");
+            x = 0;
+            y--;
+        }
+    }
+
+    /**
+     * Disegna le posizioni del piano di gara che verranno visualizzate sulla console.
+     *
+     * @param position la posizione che verra' disegnata.
+     */
+    private void drawRacingPlanPositions(DefaultPosition position) {
+        Optional<DefaultRacingVehicle> racingVehicle = isBusy(position);
+        if (racingVehicle.isPresent()) {
+            System.out.print(racingVehicle.get().getId() + "  ");
+            return;
+        }
+        switch (position.getStatus()) {
+            case IN:
+                System.out.print("=  ");
+                break;
+            case GRID:
+                System.out.print("G  ");
+                break;
+            default:
+                System.out.print("O  ");
+        }
+    }
 }
