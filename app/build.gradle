@@ -35,3 +35,7 @@ javafx {
     version = "14"
     modules = [ 'javafx.controls' ]
 }
+
+run {
+    standardInput = System.in
+}

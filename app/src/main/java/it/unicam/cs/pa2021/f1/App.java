@@ -3,9 +3,15 @@
  */
 package it.unicam.cs.pa2021.f1;
 
+import it.unicam.cs.pa2021.f1.controller.DefaultGameEngine;
 import it.unicam.cs.pa2021.f1.controller.FileReader;
+import it.unicam.cs.pa2021.f1.model.DefaultPosition;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
+
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class App {
 
@@ -16,14 +22,27 @@ public class App {
 
     public static void main(String[] args) {
         FileReader tcr = new FileReader();
+        Random random = new Random();
         DefaultRacingPlan racingPlan =  tcr.getRacingPlan();
-        DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
-        DefaultRacingVehicle drv = new DefaultRacingVehicle(2);
-        DefaultRacingVehicle rrv = new DefaultRacingVehicle(3);
-        racingPlan.addVehicleToGrid(rv, 3);
-        racingPlan.addVehicleToGrid(drv, 2);
-        racingPlan.addVehicleToGrid(rrv, 1);
-        racingPlan.printRacingPlanConsole();
+        DefaultGameEngine racingVehicleController = new DefaultGameEngine(racingPlan);
 
+        DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
+        racingPlan.addVehicleToGrid(rv, 3);
+        racingPlan.printRacingPlanConsole();
+        Scanner input = new Scanner(System.in);
+
+        while (input.hasNextLine()) {
+            List<DefaultPosition> positionsTrack = racingVehicleController.getNearPositions(rv);
+            if(positionsTrack.size() != 0) {
+                DefaultPosition position = positionsTrack.get(random.nextInt(positionsTrack.size()));
+                //racingVehicleController.moveRacingVehicle(rv, position);
+                racingPlan.printRacingPlanConsole();
+            } else {
+                System.out.println("Sei fuori");
+                return;
+            }
+        }
+
+        System.out.println("FINE");
     }
 }

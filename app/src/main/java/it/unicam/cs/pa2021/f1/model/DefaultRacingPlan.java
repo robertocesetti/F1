@@ -3,7 +3,6 @@ package it.unicam.cs.pa2021.f1.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +19,8 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     /**
      * Costruttore di un piano di gara.
      *
-     * @param height l'altezza del piano di gara.
-     * @param width la larghezza del piano di gara.
+     * @param height       l'altezza del piano di gara.
+     * @param width        la larghezza del piano di gara.
      * @param allPositions tutte le posizioni del piano di gara.
      */
     public DefaultRacingPlan(int height, int width, List<DefaultPosition> allPositions) {
@@ -47,9 +46,15 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         return this.allPositions;
     }
 
+    /**
+     * Restituisce il veicolo con quelle coordinate.
+     *
+     * @param x la coordinata x.
+     * @param y la coordinata y.
+     * @return la posizione con quelle coordinate, se presente.
+     */
     public Optional<DefaultPosition> getPosition(int x, int y) {
-        return allPositions.stream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
-
+        return allPositions.parallelStream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
     }
 
     @Override
@@ -57,9 +62,9 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         return this.allVehicles;
     }
 
-   @Override
+    @Override
     public Optional<DefaultRacingVehicle> isBusy(DefaultPosition position) {
-        return allVehicles.stream().filter(rc -> rc.getPosition().equals(position)).findFirst();
+        return allVehicles.parallelStream().filter(rc -> rc.getPosition().equals(position)).findFirst();
     }
 
     @Override
@@ -75,16 +80,20 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
                 .filter(p -> p.getStatus().equals(StatusPosition.GRID))
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * Restituisce le posizioni della pista ossia il tracciato.
      *
      * @return le posizioni della pista ossia il tracciato.
      */
     public List<DefaultPosition> trackPositions() {
-        return this.allPositions.stream()
+        return this.allPositions.parallelStream()
                 .filter(p -> p.getStatus().equals(StatusPosition.IN))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<DefaultPosition> getTrackPostion(int x, int y) {
+        return this.trackPositions().parallelStream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
     }
 
     @Override
@@ -102,14 +111,6 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         } catch (NullPointerException e) {
             return false;
         }
-    }
-
-    @Override
-    public void moveRacingVehicle(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
-        if (racingVehicle == null || nextPosition == null) throw new NullPointerException("");
-        Set<DefaultPosition> nearPositions = racingVehicle.nearPositions();
-        if (!nearPositions.contains(nextPosition)) throw new IllegalArgumentException();
-        racingVehicle.setPosition(nextPosition);
     }
 
     /**

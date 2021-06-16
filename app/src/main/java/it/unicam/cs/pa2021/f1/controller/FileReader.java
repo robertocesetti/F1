@@ -46,6 +46,7 @@ public class FileReader implements RacingPlanReader<Integer> {
 
     @Override
     public void RacingPlanPositions(Integer height, Integer width) {
+        if(height > 100 || width > 100) throw new IllegalArgumentException("L'immagine passata ha dimensioni troppo elevate (max. 100 x 100)");
         int y = height - 1;
         int x = 0;
         while (y >= 0) {
@@ -75,7 +76,7 @@ public class FileReader implements RacingPlanReader<Integer> {
             } else if(rgb == black){
                 p.setStatus(StatusPosition.IN);
             } else {
-                throw new IllegalArgumentException("Colore non richiesto " + new Color(rgb));
+                throw new IllegalArgumentException("Colore non accettabile: " + new Color(rgb));
             }
         }).collect(Collectors.toList());
     }

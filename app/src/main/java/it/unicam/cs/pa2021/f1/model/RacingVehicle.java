@@ -71,11 +71,4 @@ public interface RacingVehicle<N, P, A> {
      * @return true se il veicolo si trova fuori pista, false altrimenti.
      */
     boolean isOut();
-
-    /**
-     * Restituisce tutte le posizioni raggiungibili dal veicolo.
-     *
-     * @return l'insieme delle posizioni raggiungibili.
-     */
-    Set<P> nearPositions();
 }

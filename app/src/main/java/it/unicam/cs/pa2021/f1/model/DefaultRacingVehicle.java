@@ -1,7 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Implementazioni di default di un veicolo da corsa.
@@ -21,6 +21,7 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     public DefaultRacingVehicle(int id) {
         this.id = id;
         this.acceleration = new DefaultAcceleration(0, 0);
+        this.trajectory = new ArrayList<>();
     }
 
     @Override
@@ -38,6 +39,11 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
         this.acceleration = acceleration;
     }
 
+    public void updateAcceleration(int x, int y) {
+        this.acceleration.setX(x);
+        this.acceleration.setY(y);
+    }
+
     @Override
     public DefaultPosition getPosition() {
         return this.position;
@@ -45,8 +51,11 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
 
     @Override
     public void setPosition(DefaultPosition position) throws NullPointerException {
-        if (position == null) throw new NullPointerException("La posizione che si vuole raggiungere non e' valida");
-        if (this.position != null) this.updateTrajectory(this.position);
+        if (position == null) throw new NullPointerException("La posizione che si vuole assegnare non e' valida");
+        if (this.position != null) {
+            this.updateTrajectory(this.position);
+            this.updateAcceleration(position.getX() - this.position.getX(), position.getY() - this.position.getY());
+        }
         this.position = position;
     }
 
@@ -61,18 +70,14 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public void updateTrajectory(DefaultPosition position) {
-        if (position != null) this.trajectory.add(position);
+    public void updateTrajectory(DefaultPosition position) throws NullPointerException {
+        if (position == null) throw new NullPointerException("La posizione passata e' nulla");
+        this.trajectory.add(position);
     }
 
     @Override
     public boolean isOut() {
         return getPosition().getStatus().equals(StatusPosition.OUT);
-    }
-
-    @Override
-    public Set<DefaultPosition> nearPositions() {
-        return null; //TODO this.position.getNearPositions(this.acceleration);
     }
 
 }
