@@ -1,10 +1,9 @@
 package it.unicam.cs.pa2021.f1.model;
 
 import java.util.List;
-import java.util.Set;
 
 /**
- * Interfaccia che definisce l'implementazione di un veicolo.
+ * Interfaccia che definisce un veicolo.
  */
 public interface RacingVehicle<N, P, A> {
 

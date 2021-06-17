@@ -1,7 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
 /**
- * Interfaccia che definisce l'implementazione di una posizione del tracciato.
+ * Interfaccia che definisce una posizione del tracciato.
  */
 public interface Position<S, P> {
 

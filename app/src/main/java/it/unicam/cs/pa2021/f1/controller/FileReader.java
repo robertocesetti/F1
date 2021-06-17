@@ -36,7 +36,7 @@ public class FileReader implements RacingPlanReader<Integer> {
     public FileReader() {
         try {
             // Salvataggio dell'immagine dal file
-            BufferedImage image = ImageIO.read(new File("D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\RacingPlan.png"));
+            BufferedImage image = ImageIO.read(new File("D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png"));
             RacingPlanPositions(image.getHeight(), image.getWidth());
             racingPlan = new DefaultRacingPlan(image.getHeight(),image.getWidth(), this.setStatusPositionByImage(image));
         } catch (IOException e) {

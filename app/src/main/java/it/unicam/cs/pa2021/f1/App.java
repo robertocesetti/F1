@@ -3,46 +3,49 @@
  */
 package it.unicam.cs.pa2021.f1;
 
+import it.unicam.cs.pa2021.f1.controller.BotController;
 import it.unicam.cs.pa2021.f1.controller.DefaultGameEngine;
 import it.unicam.cs.pa2021.f1.controller.FileReader;
-import it.unicam.cs.pa2021.f1.model.DefaultPosition;
+import it.unicam.cs.pa2021.f1.model.DefaultPilot;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
-
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import it.unicam.cs.pa2021.f1.model.PilotType;
 
 public class App {
 
-    public String getGreeting() {
-        return "Hello World!";
-    }
-
-
     public static void main(String[] args) {
         FileReader tcr = new FileReader();
-        Random random = new Random();
-        DefaultRacingPlan racingPlan =  tcr.getRacingPlan();
-        DefaultGameEngine racingVehicleController = new DefaultGameEngine(racingPlan);
+        int i = 0;
+
+        DefaultRacingPlan racingPlan = tcr.getRacingPlan();
+        DefaultGameEngine engine = new DefaultGameEngine(racingPlan);
 
         DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
-        racingPlan.addVehicleToGrid(rv, 3);
+        DefaultRacingVehicle rc = new DefaultRacingVehicle(2);
+        DefaultRacingVehicle rs = new DefaultRacingVehicle(3);
+        DefaultPilot bot = new DefaultPilot("bot", rv, PilotType.BOT);
+        DefaultPilot bob = new DefaultPilot("bob", rc, PilotType.BOT);
+        DefaultPilot bor = new DefaultPilot("bor", rs, PilotType.BOT);
+        BotController botController = new BotController(racingPlan);
         racingPlan.printRacingPlanConsole();
-        Scanner input = new Scanner(System.in);
 
-        while (input.hasNextLine()) {
-            List<DefaultPosition> positionsTrack = racingVehicleController.getNearPositions(rv);
-            if(positionsTrack.size() != 0) {
-                DefaultPosition position = positionsTrack.get(random.nextInt(positionsTrack.size()));
-                //racingVehicleController.moveRacingVehicle(rv, position);
-                racingPlan.printRacingPlanConsole();
-            } else {
-                System.out.println("Sei fuori");
-                return;
-            }
+
+        while (rv.getPosition().getY() + 1 < racingPlan.getHeight()  && rc.getPosition().getY() + 1  < racingPlan.getHeight() &&
+                rs.getPosition().getY() + 1  < racingPlan.getHeight() ) {
+            System.out.println("\n");
+            botController.botNextPosition(bot.getRacingVehicle());
+            System.out.println(bot.getRacingVehicle().getPosition().toString());
+            botController.botNextPosition(bob.getRacingVehicle());
+            System.out.println(bob.getRacingVehicle().getPosition().toString());
+            botController.botNextPosition(bor.getRacingVehicle());
+            System.out.println(bor.getRacingVehicle().getPosition().toString());
+            racingPlan.printRacingPlanConsole();
+            i++;
         }
-
         System.out.println("FINE");
+    }
+
+    public String getGreeting() {
+        return "Hello World!";
     }
 }

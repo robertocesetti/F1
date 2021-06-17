@@ -1,7 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
 /**
- * Interfaccia che definisce l'implementazione di un pilota.
+ * Interfaccia che definisce un pilota.
  */
 public interface Pilot<R> {
 
@@ -19,4 +19,10 @@ public interface Pilot<R> {
      */
     R getRacingVehicle();
 
+    /**
+     * Restituisce il tipo del pilota.
+     *
+     * @return il tipo del pilota.
+     */
+    PilotType getType();
 }

@@ -92,6 +92,13 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Restituisce una poszione della pista con quelle coordinate.
+     *
+     * @param x la coordinata x della posizione che vogliamo controllare.
+     * @param y la coordinata y della posizione che vogliamo controllare.
+     * @return la posizione della pista con quelle coordinate (se presente).
+     */
     public Optional<DefaultPosition> getTrackPostion(int x, int y) {
         return this.trackPositions().parallelStream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
     }

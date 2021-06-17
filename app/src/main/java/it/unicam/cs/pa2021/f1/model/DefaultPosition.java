@@ -63,4 +63,13 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    @Override
+    public String toString() {
+        return "DefaultPosition{" +
+                "x=" + x +
+                ", y=" + y +
+                ", statusPosition=" + statusPosition +
+                '}';
+    }
 }

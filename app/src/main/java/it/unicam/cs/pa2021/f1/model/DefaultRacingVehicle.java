@@ -39,6 +39,12 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
         this.acceleration = acceleration;
     }
 
+    /**
+     * Aggiorna l'accelerazione del veicolo
+     *
+     * @param x coordinata x del vettore accelerazione.
+     * @param y coordinata y del vettore accelerazione.
+     */
     public void updateAcceleration(int x, int y) {
         this.acceleration.setX(x);
         this.acceleration.setY(y);

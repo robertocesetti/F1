@@ -26,6 +26,11 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
     }
 
     @Override
+    public DefaultRacingPlan getRacingPlan() {
+        return this.racingPlan;
+    }
+
+    @Override
     public void moveRacingVehicle(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
         if (racingVehicle == null || nextPosition == null)
             throw new NullPointerException("Il veicolo o la posizione inserita non e' valido");
@@ -34,7 +39,6 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
             throw new IllegalArgumentException("La posizione " + nextPosition + " non e' una posizione accessibile");
         racingVehicle.setPosition(nextPosition);
     }
-
 
     /**
      * Le posizioni vicine al veicolo in base all'accelerazione di questo.
