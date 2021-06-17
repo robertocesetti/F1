@@ -5,7 +5,7 @@ package it.unicam.cs.pa2021.f1;
 
 import it.unicam.cs.pa2021.f1.controller.BotController;
 import it.unicam.cs.pa2021.f1.controller.DefaultGameEngine;
-import it.unicam.cs.pa2021.f1.controller.FileReader;
+import it.unicam.cs.pa2021.f1.controller.RacingPlanReader;
 import it.unicam.cs.pa2021.f1.model.DefaultPilot;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
@@ -14,10 +14,10 @@ import it.unicam.cs.pa2021.f1.model.PilotType;
 public class App {
 
     public static void main(String[] args) {
-        FileReader tcr = new FileReader();
+        RacingPlanReader tcr = new RacingPlanReader();
         int i = 0;
 
-        DefaultRacingPlan racingPlan = tcr.getRacingPlan();
+        DefaultRacingPlan racingPlan = null;
         DefaultGameEngine engine = new DefaultGameEngine(racingPlan);
 
         DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
