@@ -32,7 +32,7 @@ public class BotController implements  BotIA {
      * @param racingVehicle il veicolo per il quale vogliamo sapere le posizioni vicine.
      * @return le posizioni della pista raggiungibili dal veicolo.
      */
-    private List<DefaultPosition> botNearPositions(DefaultRacingVehicle racingVehicle) {
+    private List<DefaultPosition> filteredNearPositions(DefaultRacingVehicle racingVehicle) {
         return defaultGameEngine.getNearPositions(racingVehicle).parallelStream()
                 .filter(p -> p.getY() >= racingVehicle.getPosition().getY()).collect(Collectors.toList());
     }
@@ -41,13 +41,14 @@ public class BotController implements  BotIA {
      * Azzera l'accelerazione del veicolo in caso di posizioni vicine irraggiungibili.
      *
      * @param racingVehicle il veicolo.
-     * @param positions la lista di posizioni vicine.
      */
-    private void modifyAcceleration(DefaultRacingVehicle racingVehicle, List<DefaultPosition> positions) {
+    private List<DefaultPosition> allNearPosition(DefaultRacingVehicle racingVehicle) {
+        List<DefaultPosition> positions = filteredNearPositions(racingVehicle);
         if (positions.isEmpty()) {
             racingVehicle.updateAcceleration(0, 0);
-            botNearPositions(racingVehicle);
+            positions = filteredNearPositions(racingVehicle);
         }
+        return positions;
     }
 
     /**
@@ -77,8 +78,7 @@ public class BotController implements  BotIA {
 
     @Override
     public DefaultPosition botNextPosition(DefaultRacingVehicle racingVehicle) {
-        List<DefaultPosition> positions = this.botNearPositions(racingVehicle);
-        modifyAcceleration(racingVehicle, positions);
+        List<DefaultPosition> positions = allNearPosition(racingVehicle);
         return assignPosition(positions);
     }
 

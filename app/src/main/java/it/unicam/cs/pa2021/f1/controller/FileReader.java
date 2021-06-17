@@ -12,5 +12,8 @@ public interface FileReader<N> {
     /**
      * Restituisce un piano di gara.
      */
-    DefaultRacingPlan getRacingPlan() throws IOException;
+    DefaultRacingPlan getRacingPlan();
+
+
+    void setRacingPlan(String filePath) throws IOException;
 }

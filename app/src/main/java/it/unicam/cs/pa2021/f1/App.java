@@ -3,46 +3,46 @@
  */
 package it.unicam.cs.pa2021.f1;
 
-import it.unicam.cs.pa2021.f1.controller.BotController;
-import it.unicam.cs.pa2021.f1.controller.DefaultGameEngine;
-import it.unicam.cs.pa2021.f1.controller.RacingPlanReader;
-import it.unicam.cs.pa2021.f1.model.DefaultPilot;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
-import it.unicam.cs.pa2021.f1.model.PilotType;
+import it.unicam.cs.pa2021.f1.view.ConsoleView;
 
 public class App {
 
     public static void main(String[] args) {
-        RacingPlanReader tcr = new RacingPlanReader();
-        int i = 0;
 
-        DefaultRacingPlan racingPlan = null;
-        DefaultGameEngine engine = new DefaultGameEngine(racingPlan);
+        ConsoleView consoleView = new ConsoleView();
+        consoleView.open();
 
-        DefaultRacingVehicle rv = new DefaultRacingVehicle(1);
-        DefaultRacingVehicle rc = new DefaultRacingVehicle(2);
-        DefaultRacingVehicle rs = new DefaultRacingVehicle(3);
-        DefaultPilot bot = new DefaultPilot("bot", rv, PilotType.BOT);
-        DefaultPilot bob = new DefaultPilot("bob", rc, PilotType.BOT);
-        DefaultPilot bor = new DefaultPilot("bor", rs, PilotType.BOT);
-        BotController botController = new BotController(racingPlan);
-        racingPlan.printRacingPlanConsole();
+        /*
+         //Application.launch(args);
+         RacingPlanReader tcr = new RacingPlanReader();
+         int i = 0;
+
+         DefaultRacingPlan racingPlan = null;
+         DefaultGameEngine engine = new DefaultGameEngine(racingPlan);
+
+         DefaultRacingVehicle rv = new DefaultRacingVehicle();
+         DefaultRacingVehicle rc = new DefaultRacingVehicle();
+         DefaultRacingVehicle rs = new DefaultRacingVehicle();
+         DefaultPilot bot = new DefaultPilot("bot", rv, PilotType.BOT);
+         DefaultPilot bob = new DefaultPilot("bob", rc, PilotType.BOT);
+         DefaultPilot bor = new DefaultPilot("bor", rs, PilotType.BOT);
+         BotController botController = new BotController(racingPlan);
+         //racingPlan.printRacingPlanConsole();
 
 
-        while (rv.getPosition().getY() + 1 < racingPlan.getHeight()  && rc.getPosition().getY() + 1  < racingPlan.getHeight() &&
-                rs.getPosition().getY() + 1  < racingPlan.getHeight() ) {
-            System.out.println("\n");
-            botController.botNextPosition(bot.getRacingVehicle());
-            System.out.println(bot.getRacingVehicle().getPosition().toString());
-            botController.botNextPosition(bob.getRacingVehicle());
-            System.out.println(bob.getRacingVehicle().getPosition().toString());
-            botController.botNextPosition(bor.getRacingVehicle());
-            System.out.println(bor.getRacingVehicle().getPosition().toString());
-            racingPlan.printRacingPlanConsole();
-            i++;
-        }
-        System.out.println("FINE");
+         while (rv.getPosition().getY() + 1 < racingPlan.getHeight()  && rc.getPosition().getY() + 1  < racingPlan.getHeight() &&
+         rs.getPosition().getY() + 1  < racingPlan.getHeight() ) {
+         System.out.println("\n");
+         botController.botNextPosition(bot.getRacingVehicle());
+         System.out.println(bot.getRacingVehicle().getPosition().toString());
+         botController.botNextPosition(bob.getRacingVehicle());
+         System.out.println(bob.getRacingVehicle().getPosition().toString());
+         botController.botNextPosition(bor.getRacingVehicle());
+         System.out.println(bor.getRacingVehicle().getPosition().toString());
+         //racingPlan.printRacingPlanConsole();
+         i++;
+         }
+         */
     }
 
     public String getGreeting() {

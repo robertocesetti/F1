@@ -31,8 +31,8 @@ public class RacingPlanReader implements FileReader<Integer> {
      *
      * @throws IOException "if an error occurs during reading or when not able to create required ImageInputStream".
      */
-    private void read() throws IOException {
-        BufferedImage image = ImageIO.read(new File("D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png"));
+    private void read(String filePath) throws IOException {
+        BufferedImage image = ImageIO.read(new File(filePath));
         racingPlanPositions(image.getHeight(), image.getWidth());
         racingPlan = new DefaultRacingPlan(image.getHeight(), image.getWidth(), this.setStatusPositionByImage(image));
     }
@@ -81,9 +81,13 @@ public class RacingPlanReader implements FileReader<Integer> {
     }
 
     @Override
-    public DefaultRacingPlan getRacingPlan() throws IOException {
-        if(racingPlan == null) read();
+    public DefaultRacingPlan getRacingPlan() throws IllegalArgumentException {
+        if(racingPlan == null) throw new IllegalArgumentException("Non e' stato impostato un circuito");
         return racingPlan;
     }
 
+    @Override
+    public void setRacingPlan(String filePath) throws IOException  {
+        read(filePath);
+    }
 }

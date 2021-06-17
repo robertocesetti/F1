@@ -120,44 +120,8 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         }
     }
 
-    /**
-     * Stampa sulla console il piano di gara.
-     */
-    public void printRacingPlanConsole() {
-        int y = this.height - 1;
-        int x = 0;
-        while (y >= 0) {
-            while (x < width) {
-                Optional<DefaultPosition> position = getPosition(x, y);
-                position.ifPresent(this::drawRacingPlanPositions);
-                x++;
-            }
-            System.out.print("\n");
-            x = 0;
-            y--;
-        }
+    public boolean addVehicleToGrid (DefaultRacingVehicle racingVehicle) {
+        return addVehicleToGrid(racingVehicle, racingVehicle.getId());
     }
 
-    /**
-     * Disegna le posizioni del piano di gara che verranno visualizzate sulla console.
-     *
-     * @param position la posizione che verra' disegnata.
-     */
-    private void drawRacingPlanPositions(DefaultPosition position) {
-        Optional<DefaultRacingVehicle> racingVehicle = isBusy(position);
-        if (racingVehicle.isPresent()) {
-            System.out.print(racingVehicle.get().getId() + "  ");
-            return;
-        }
-        switch (position.getStatus()) {
-            case IN:
-                System.out.print("-  ");
-                break;
-            case GRID:
-                System.out.print("G  ");
-                break;
-            default:
-                System.out.print("O  ");
-        }
-    }
 }
