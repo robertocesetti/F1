@@ -14,7 +14,7 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     private DefaultPosition position;
     private List<DefaultPosition> trajectory;
     private DefaultAcceleration acceleration;
-    //private static final Logger LOGGER = Logger.getLogger( DefaultRacingVehicle.class.getName() );
+    private static final Logger LOGGER = Logger.getLogger( DefaultRacingVehicle.class.getName() );
 
     /**
      * Costruttore di un veicolo da corsa.
@@ -33,7 +33,7 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
 
     private int nextId () {
         idVehicle++;
-        //LOGGER.info("L'id dell'auto e': " + idVehicle);
+        LOGGER.info("L'id dell'auto e': " + idVehicle);
         return idVehicle;
     }
 

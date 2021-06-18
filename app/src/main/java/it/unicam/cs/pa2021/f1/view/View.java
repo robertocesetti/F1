@@ -8,7 +8,9 @@ import java.io.IOException;
 public interface View {
 
     /**
-     * Permette di avviare la vista.
+     * Permette di aprire la vista.
+     *
+     * @throws IOException se la lettura del file non e' avvenuta correttamente.
      */
     void open() throws IOException;
 

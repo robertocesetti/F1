@@ -10,10 +10,18 @@ import java.io.IOException;
 public interface FileReader<R> {
 
     /**
-     * Restituisce un piano di gara.
+     * Restituisce il piano di gara letto dal file.
+     *
+     * @return il piano di gara letto dal file.
+     * @throws IllegalArgumentException se non e' stato impostato un circuito.
      */
-    R getRacingPlan();
+    R getRacingPlan() throws IllegalArgumentException;
 
-
+    /**
+     * Imposta il piano di gara dal file letto.
+     *
+     * @param filePath il percorso del file.
+     * @throws IOException se la lettura del file non e' avvenuta correttamente.
+     */
     void setRacingPlan(String filePath) throws IOException;
 }

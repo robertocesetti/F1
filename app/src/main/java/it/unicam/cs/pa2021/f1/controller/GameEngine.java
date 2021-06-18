@@ -5,14 +5,14 @@ import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 /**
  * Interfaccia che difinisce il motore di gioco.
  */
-public interface GameEngine<R, P> {
+public interface GameEngine<R, P, D> {
 
     /**
      * Restituisce il piano di gara.
      *
      * @return il piano di gara.
      */
-    DefaultRacingPlan getRacingPlan();
+    D getRacingPlan();
 
     /**
      * Effettua lo spostamento del veicolo nella posizione indicata se la posizione e' accessibile.

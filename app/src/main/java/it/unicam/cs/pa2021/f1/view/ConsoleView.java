@@ -2,10 +2,7 @@ package it.unicam.cs.pa2021.f1.view;
 
 import it.unicam.cs.pa2021.f1.controller.BotController;
 import it.unicam.cs.pa2021.f1.controller.DefaultMasterController;
-import it.unicam.cs.pa2021.f1.model.DefaultPosition;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
-import it.unicam.cs.pa2021.f1.model.PilotType;
+import it.unicam.cs.pa2021.f1.model.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -16,19 +13,20 @@ import java.util.Scanner;
  */
 public class ConsoleView implements View {
 
-    DefaultMasterController masterController = new DefaultMasterController();
-    String path = "D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png";
+    private DefaultMasterController masterController = new DefaultMasterController();
+    private String path = "D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png";
+    private Scanner scanner;
 
     @Override
     public void open() {
         try {
+            scanner = new Scanner(System.in);
             masterController.gameSettings(path);
             masterController.configurePlayer("dam", PilotType.BOT);
             masterController.configurePlayer("rob", PilotType.BOT);
             printRacingPlanConsole();
             statusRace();
         } catch (IOException e) {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Errore inserimento file, inserisci il path qui: ");
             this.path = scanner.nextLine();
             if (!this.path.equals("exit"))
@@ -92,21 +90,49 @@ public class ConsoleView implements View {
         }
     }
 
-    //TODO SPOSTARE!!!!!!!!!!!!
-
-    public void statusRace() throws IOException {
+    private void statusRace() throws IOException {
         BotController botController = masterController.getBotController();
         DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
-        while (!isFinish(racingPlan)) {
+        while (!masterController.isFinish(racingPlan)) {
             System.out.println("\n");
-            masterController.setRacingVehicleMovemenet();
+            DefaultPilot pilot = masterController.getReferee().pilotTurn();
+            masterController.setRacingVehicleMovemenet(pilot, positionByPilot(pilot));
             printRacingPlanConsole();
         }
     }
 
-    private boolean isFinish(DefaultRacingPlan racingPlan) {
-        return racingPlan.getAllVehicles().stream().anyMatch(r -> r.getPosition().getY() + 1 >= racingPlan.getHeight());
+    private DefaultPosition positionByPilot(DefaultPilot pilot) {
+        if (pilot.getType().equals(PilotType.BOT)) return null;
+        int x;
+        int y;
+        DefaultPosition position;
+        masterController.getGameEngine().getNearPositions(pilot.getRacingVehicle()).forEach(System.out::println);
+        System.out.println("Inserisci una posizione tra quelle mostrate.");
+        System.out.println("x: ");
+        x = scanner.nextInt();
+        System.out.println("y: ");
+        y = scanner.nextInt();
+        return position = new DefaultPosition(y, x);
     }
 
+    private void botSettings(int numberOfBot) {
+        for (int i = 1; i <= numberOfBot; i++) {
+            masterController.configurePlayer("bot" + i, PilotType.BOT);
+        }
+    }
 
+    private void playerSettings(String name) {
+        masterController.configurePlayer(name, PilotType.PLAYER);
+    }
+
+    private void allPlayers() {
+        String risposta = "n";
+        do {
+            System.out.println("Inserisci il nome del giocatore.");
+            String nameOfPlayer = scanner.nextLine();
+            playerSettings(nameOfPlayer);
+            System.out.println("Vuoi aggiungerne un altro? (s per si, n per no)");
+            risposta = scanner.nextLine();
+        } while(risposta.equals("s"));
+    }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * Implementazione di default di un controller per il veicolo da corsa.
  */
-public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, DefaultPosition> {
+public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, DefaultPosition, DefaultRacingPlan> {
 
     private final DefaultRacingPlan racingPlan;
 
