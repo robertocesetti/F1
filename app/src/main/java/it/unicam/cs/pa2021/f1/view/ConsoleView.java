@@ -1,6 +1,5 @@
 package it.unicam.cs.pa2021.f1.view;
 
-import it.unicam.cs.pa2021.f1.controller.BotController;
 import it.unicam.cs.pa2021.f1.controller.DefaultMasterController;
 import it.unicam.cs.pa2021.f1.model.*;
 
@@ -40,10 +39,20 @@ public class ConsoleView implements View {
         System.out.println("Bye!!!! <3");
     }
 
+    /**
+     * Restituisce il percorso dove e' salvato il file.
+     *
+     * @return il percorso dove e' salvato il file.
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * Imposta il percorso dove e' salvato il file.
+     *
+     * @param path il percorso dove e' salvato il file.
+     */
     public void setPath(String path) {
         this.path = path;
     }
@@ -85,35 +94,63 @@ public class ConsoleView implements View {
             case GRID:
                 System.out.print("G  ");
                 break;
+            case FINISH:
+                System.out.print("F  ");
+                break;
             default:
                 System.out.print("O  ");
         }
     }
 
+    /**
+     * Stampa lo stato della pista ad ogni spostamento dei veicoli.
+     *
+     * @throws IOException se il file non viene letto correttamente.
+     */
     private void statusRace() throws IOException {
         DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
         while (!masterController.isFinish(racingPlan)) {
-            System.out.println("\n");
-            DefaultPilot pilot = masterController.getReferee().pilotTurn();
-            masterController.setRacingVehicleMovemenet(pilot, positionByPilot(pilot));
-            printRacingPlanConsole();
+            try {
+                System.out.println("\n");
+                DefaultPilot pilot = masterController.getReferee().pilotTurn();
+                masterController.setRacingVehicleMovemenet(pilot, positionByPilot(pilot));
+                //TODO masterController.getRanking();
+                printRacingPlanConsole();
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        //TODO masterController.getWinner();
+        System.out.println("Fine della gara!!");
+        System.out.println("Il vincitore e': ");
+    }
+
+    /**
+     * Sposta il veicolo del pilota.
+     *
+     * @param pilot il pilota.
+     * @return la posizione in cui e' verra' spostato.
+     */
+    private DefaultPosition positionByPilot(DefaultPilot pilot) {
+        if (pilot.getType().equals(PilotType.BOT)) {
+            return null;
+        } else {
+            int x;
+            int y;
+            masterController.getGameEngine().allNearPosition(pilot.getRacingVehicle()).forEach(System.out::println);
+            System.out.println("Inserisci una posizione tra quelle mostrate.");
+            System.out.println("x: ");
+            x = scanner.nextInt();
+            System.out.println("y: ");
+            y = scanner.nextInt();
+            Optional<DefaultPosition> position = masterController.getGameEngine().getRacingPlan().getPosition(x, y);
+            return position.orElse(null);
         }
     }
 
-    private DefaultPosition positionByPilot(DefaultPilot pilot) {
-        if (pilot.getType().equals(PilotType.BOT)) return null;
-        int x;
-        int y;
-        DefaultPosition position;
-        masterController.getGameEngine().getNearPositions(pilot.getRacingVehicle()).forEach(System.out::println);
-        System.out.println("Inserisci una posizione tra quelle mostrate.");
-        System.out.println("x: ");
-        x = scanner.nextInt();
-        System.out.println("y: ");
-        y = scanner.nextInt();
-        return position = new DefaultPosition(y, x);
-    }
-
+    /**
+     * Crea i bot che parteciperanno alla gara.
+     */
     private void allBot() {
         System.out.println("Inserisci il numero di giocatori bot ");
         int numberOfBot = scanner.nextInt();
@@ -122,18 +159,26 @@ public class ConsoleView implements View {
         }
     }
 
-    private void playerSettings(String name) {
-        masterController.configurePlayer(name, PilotType.PLAYER);
+    /**
+     * Crea un player in base a cio' che e' stato inserito dall'utente sulla console.
+     * @param name il nome del player.
+     * @return l'id del veicolo del player.
+     */
+    private int playerSettings(String name) {
+       return masterController.configurePlayer(name, PilotType.PLAYER);
     }
 
+    /**
+     * Permette di creare piu' players.
+     */
     private void allPlayers() {
         String risposta = "n";
         do {
             System.out.println("Inserisci il nome del giocatore ");
             String nameOfPlayer = scanner.nextLine();
-            playerSettings(nameOfPlayer);
-            System.out.println("Vuoi aggiungerne un altro? (s per si) ");
+            System.out.println("L'id del tuo veicolo e': " + playerSettings(nameOfPlayer));
+            System.out.println("Vuoi aggiungere un altro giocatore ? (s per si) ");
             risposta = scanner.nextLine();
-        } while(risposta.equals("s"));
+        } while (risposta.equals("s"));
     }
 }

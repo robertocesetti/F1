@@ -5,7 +5,6 @@ import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.StatusPosition;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -71,11 +70,11 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
             if (rgb == red) {
                 p.setStatus(StatusPosition.GRID);
             } else if (rgb == white) {
-                p.setStatus(StatusPosition.OUT);
+                p.setStatus(StatusPosition.FINISH);
             } else if (rgb == black) {
                 p.setStatus(StatusPosition.IN);
             } else {
-                throw new IllegalArgumentException("Colore non accettabile: " + new Color(rgb));
+                p.setStatus(StatusPosition.OUT);
             }
         }).collect(Collectors.toList());
     }

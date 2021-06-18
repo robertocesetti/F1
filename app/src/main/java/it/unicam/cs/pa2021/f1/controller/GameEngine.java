@@ -1,9 +1,11 @@
 package it.unicam.cs.pa2021.f1.controller;
 
-import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
-
 /**
  * Interfaccia che difinisce il motore di gioco.
+ *
+ * @param <R> il tipo che definisce il veicolo.
+ * @param <P> il tipo che definisce la posizione.
+ * @param <D> il tipo che definisce il piano di gara.
  */
 public interface GameEngine<R, P, D> {
 

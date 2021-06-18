@@ -6,7 +6,6 @@ import it.unicam.cs.pa2021.f1.model.DefaultRacingVehicle;
 
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * Implementazione di default di un controller per il bot.
@@ -24,31 +23,6 @@ public class BotController implements  BotIA {
      */
     public BotController(DefaultRacingPlan racingPlan) {
         defaultGameEngine = new DefaultGameEngine(racingPlan);
-    }
-
-    /**
-     * Restituisce le posizioni della pista raggiungibili da un veicolo.
-     *
-     * @param racingVehicle il veicolo per il quale vogliamo sapere le posizioni vicine.
-     * @return le posizioni della pista raggiungibili dal veicolo.
-     */
-    private List<DefaultPosition> filteredNearPositions(DefaultRacingVehicle racingVehicle) {
-        return defaultGameEngine.getNearPositions(racingVehicle).parallelStream()
-                .filter(p -> p.getY() >= racingVehicle.getPosition().getY()).collect(Collectors.toList());
-    }
-
-    /**
-     * Azzera l'accelerazione del veicolo in caso di posizioni vicine irraggiungibili.
-     *
-     * @param racingVehicle il veicolo.
-     */
-    private List<DefaultPosition> allNearPosition(DefaultRacingVehicle racingVehicle) {
-        List<DefaultPosition> positions = filteredNearPositions(racingVehicle);
-        if (positions.isEmpty()) {
-            racingVehicle.updateAcceleration(0, 0);
-            positions = filteredNearPositions(racingVehicle);
-        }
-        return positions;
     }
 
     /**
@@ -78,7 +52,7 @@ public class BotController implements  BotIA {
 
     @Override
     public DefaultPosition botNextPosition(DefaultRacingVehicle racingVehicle) {
-        List<DefaultPosition> positions = allNearPosition(racingVehicle);
+        List<DefaultPosition> positions = defaultGameEngine.allNearPosition(racingVehicle);
         return assignPosition(positions);
     }
 

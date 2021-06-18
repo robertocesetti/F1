@@ -10,16 +10,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Implementazione di default di un controller per il veicolo da corsa.
+ * Implementazione di default del motore di gioco.
  */
 public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, DefaultPosition, DefaultRacingPlan> {
 
     private final DefaultRacingPlan racingPlan;
 
     /**
-     * Costruttore del controller del veicolo.
+     * Costruttore del motore di gioco.
      *
-     * @param racingPlan il piana gara in cui e' presente il veicolo.
+     * @param racingPlan il piana gara sul quale agisce il motore di gioco.
      */
     public DefaultGameEngine(DefaultRacingPlan racingPlan) {
         this.racingPlan = racingPlan;
@@ -31,21 +31,52 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
     }
 
     @Override
-    public void moveRacingVehicle(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) {
+    public void moveRacingVehicle(DefaultRacingVehicle racingVehicle, DefaultPosition nextPosition) throws NullPointerException, IllegalArgumentException {
         if (racingVehicle == null || nextPosition == null)
             throw new NullPointerException("Il veicolo o la posizione inserita non e' valido");
-        List<DefaultPosition> nearPositions = getNearPositions(racingVehicle);
+        List<DefaultPosition> nearPositions = allNearPosition(racingVehicle);
         if (!nearPositions.contains(nextPosition))
             throw new IllegalArgumentException("La posizione " + nextPosition + " non e' una posizione accessibile");
         racingVehicle.setPosition(nextPosition);
     }
 
     /**
-     * Le posizioni vicine al veicolo in base all'accelerazione di questo.
+     * Si assicura che il veicolo azzeri la propria accelerazione
+     * se le posizioni raggiungibili da quest'ultimo non fanno parte della pista.
      *
+     * @param racingVehicle il veicolo.
+     */
+    public List<DefaultPosition> allNearPosition(DefaultRacingVehicle racingVehicle) {
+        List<DefaultPosition> safePositions;
+        List<DefaultPosition> positions = filteredNearPositions(racingVehicle);
+        if (positions.isEmpty()) {
+            racingVehicle.updateAcceleration(0, 0);
+            positions = filteredNearPositions(racingVehicle);
+        }
+        safePositions = positions.stream().filter(p -> p.getY() <= racingPlan.getHeight() - 1)
+                .collect(Collectors.toList());
+        if(safePositions.isEmpty()) safePositions = racingPlan.getFinishLine();
+        return safePositions;
+    }
+
+    /**
+     * Restituisce le posizioni della pista raggiungibili da un veicolo evitando che questo possa tornare indietro.
+     *
+     * @param racingVehicle il veicolo per il quale vogliamo sapere le posizioni vicine che non siano dietro rispetto alla sua posizione.
+     * @return le posizioni della pista raggiungibili che non sono dietro rispetto alla posizione del veicolo.
+     */
+    private List<DefaultPosition> filteredNearPositions(DefaultRacingVehicle racingVehicle) {
+        return getNearPositions(racingVehicle).parallelStream()
+                .filter(p -> p.getY() >= racingVehicle.getPosition().getY()).collect(Collectors.toList());
+    }
+
+    /**
+     * Le posizioni raggiungibili dal veicolo in base alla sua accelerazione.
+     *
+     * @param racingVehicle il veicolo.
      * @return l'insieme delle posizioni raggiungibili.
      */
-    public List<DefaultPosition> getNearPositions(DefaultRacingVehicle racingVehicle) {
+    private List<DefaultPosition> getNearPositions(DefaultRacingVehicle racingVehicle) {
         int traslateX = racingVehicle.getPosition().getX() + racingVehicle.getAcceleration().getX();
         int traslateY = racingVehicle.getPosition().getY() + racingVehicle.getAcceleration().getY();
         return Stream.of(this.center(traslateX, traslateY),

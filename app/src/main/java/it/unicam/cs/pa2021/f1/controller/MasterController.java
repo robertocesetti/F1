@@ -1,23 +1,18 @@
 package it.unicam.cs.pa2021.f1.controller;
 
-import it.unicam.cs.pa2021.f1.model.DefaultPilot;
-import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.PilotType;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
- * Interfacccia che definisce il controller principale.
+ * Interfaccia che definisce il controller principale.
+ *
+ * @param <P> il tipo che definisce il lettore del file.
+ * @param <G> il tipo che definisce il motore di gioco.
+ * @param <B> il tipo che definisce il controllore del bot.
+ * @param <R> il tipo che definisce l'arbitro.
  */
-public interface MasterController {
-
-    /**
-     *    1. E' conosciuto dalla vista ma non la conosce.
-     *    2. Conosce il modello.
-     *    3. Conosce tutti i cotroller.
-     */
-
+public interface MasterController<P, G, B, R> {
 
     /**
      * Configura le impostazioni di gioco.
@@ -32,35 +27,35 @@ public interface MasterController {
      *
      * @return il lettore del piano di gara.
      */
-    RacingPlanReader getRacingPlanFileReader();
+    P getRacingPlanFileReader();
 
     /**
      * Configura le impostazioni del giocatore.
      *
-     * @param name del giocatore.
+     * @param name      del giocatore.
      * @param pilotType il tipo (BOT o PLAYER).
+     * @return l'id del veicolo del player.
      */
-    void configurePlayer(String name, PilotType pilotType);
+    int configurePlayer(String name, PilotType pilotType);
 
     /**
+     * Restituisce il motore di gioco.
      *
+     * @return il motore di gioco.
+     */
+    G getGameEngine();
+
+    /**
+     * Restituisce il bot controller.
      *
-     * @param racingPlan
-     * @return
+     * @return il bot controller.
      */
-    boolean isFinish(DefaultRacingPlan racingPlan);
-
-
+    B getBotController();
 
     /**
-     * @return
+     * Restituisce l'arbitro.
+     *
+     * @return l'arbitro.
      */
-    DefaultGameEngine getGameEngine();
-
-    /**
-     * @return
-     */
-    BotController getBotController();
-
-
+    R getReferee();
 }

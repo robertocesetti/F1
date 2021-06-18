@@ -2,23 +2,20 @@ package it.unicam.cs.pa2021.f1.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Implementazioni di default di un veicolo da corsa.
  */
-public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosition, DefaultAcceleration> {
+public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, DefaultAcceleration> {
 
     private final int id;
     private static int idVehicle = 0;
     private DefaultPosition position;
     private List<DefaultPosition> trajectory;
     private DefaultAcceleration acceleration;
-    private static final Logger LOGGER = Logger.getLogger( DefaultRacingVehicle.class.getName() );
 
     /**
      * Costruttore di un veicolo da corsa.
-     *
      */
     public DefaultRacingVehicle() {
         this.id = nextId();
@@ -27,13 +24,12 @@ public class DefaultRacingVehicle implements RacingVehicle<Integer, DefaultPosit
     }
 
     @Override
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
     private int nextId () {
         idVehicle++;
-        LOGGER.info("L'id dell'auto e': " + idVehicle);
         return idVehicle;
     }
 

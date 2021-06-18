@@ -15,6 +15,7 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     private final List<DefaultPosition> allPositions;
     private final List<DefaultRacingVehicle> allVehicles;
     private List<DefaultPosition> grid;
+    private List<DefaultPosition> finishLine;
 
     /**
      * Costruttore di un piano di gara.
@@ -29,6 +30,7 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         this.allPositions = allPositions;
         this.allVehicles = new ArrayList<>();
         this.createGrid();
+        this.createFinishLine();
     }
 
     @Override
@@ -72,6 +74,9 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         return this.grid;
     }
 
+    @Override
+    public List<DefaultPosition> getFinishLine() { return this.finishLine; }
+
     /**
      * Crea la griglia di partenza del tracciato.
      */
@@ -82,13 +87,22 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     /**
-     * Restituisce le posizioni della pista ossia il tracciato.
+     * Crea il traguardo del tracciato.
+     */
+    private void createFinishLine() {
+        this.finishLine = this.allPositions.stream()
+                .filter(p -> p.getStatus().equals(StatusPosition.FINISH))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Restituisce le posizioni interne alla pista.
      *
-     * @return le posizioni della pista ossia il tracciato.
+     * @return le posizioni interne alla pista.
      */
     public List<DefaultPosition> trackPositions() {
         return this.allPositions.parallelStream()
-                .filter(p -> p.getStatus().equals(StatusPosition.IN))
+                .filter(p -> p.getStatus().equals(StatusPosition.IN) || p.getStatus().equals(StatusPosition.FINISH))
                 .collect(Collectors.toList());
     }
 
@@ -97,7 +111,7 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
      *
      * @param x la coordinata x della posizione che vogliamo controllare.
      * @param y la coordinata y della posizione che vogliamo controllare.
-     * @return la posizione della pista con quelle coordinate (se presente).
+     * @return la posizione della pista con quelle coordinate se presente.
      */
     public Optional<DefaultPosition> getTrackPostion(int x, int y) {
         return this.trackPositions().parallelStream().filter(p -> p.getX() == x && p.getY() == y).findFirst();
@@ -118,10 +132,6 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
         } catch (NullPointerException e) {
             return false;
         }
-    }
-
-    public boolean addVehicleToGrid (DefaultRacingVehicle racingVehicle) {
-        return addVehicleToGrid(racingVehicle, racingVehicle.getId());
     }
 
 }

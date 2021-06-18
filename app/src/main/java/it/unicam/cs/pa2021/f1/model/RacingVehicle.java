@@ -4,15 +4,18 @@ import java.util.List;
 
 /**
  * Interfaccia che definisce un veicolo.
+ *
+ * @param <P> il tipo che si vuole utilizzare per definire la posizione.
+ * @param <A> il tipo che si vuole utilizzare per definire l'accelerazione.
  */
-public interface RacingVehicle<N, P, A> {
+public interface RacingVehicle<P, A> {
 
     /**
      * Restituisce l'identificativo del veicolo.
      *
      * @return l'identificativo del veicolo.
      */
-    N getId();
+    int getId();
 
     /**
      * Restituisce l'accelerazione del veicolo.
@@ -64,8 +67,7 @@ public interface RacingVehicle<N, P, A> {
     void updateTrajectory(P position);
 
     /**
-     * Restituisce informazioni sulla posizione del veicolo che si puo' trovare
-     * in pista o fuori pista.
+     * Restituisce true se il veicolo si trova fuori pista, false altrimenti.
      *
      * @return true se il veicolo si trova fuori pista, false altrimenti.
      */

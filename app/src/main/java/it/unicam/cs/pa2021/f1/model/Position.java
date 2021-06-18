@@ -3,7 +3,7 @@ package it.unicam.cs.pa2021.f1.model;
 /**
  * Interfaccia che definisce una posizione del tracciato.
  */
-public interface Position<S, P> {
+public interface Position {
 
     /**
      * Restituisce lo stato di una posizione del tracciato
@@ -11,13 +11,13 @@ public interface Position<S, P> {
      *
      * @return lo stato della posizione.
      */
-    S getStatus();
+    StatusPosition getStatus();
 
     /**
      * Aggiorna il valore dello stato al valore passato.
      *
      * @param status il nuovo valore dello stato.
      */
-    P setStatus(S status);
+    void setStatus(StatusPosition status);
 
 }

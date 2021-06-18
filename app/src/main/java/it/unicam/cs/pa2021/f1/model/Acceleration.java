@@ -3,8 +3,7 @@ package it.unicam.cs.pa2021.f1.model;
 /**
  * Interfaccia che definisce l'accelerazione di un veicolo ossia il suo spostamento sul piano gara.
  *
- * @param <N> Indica il tipo di dato che si vuole utilizzare per definire le coordinate del vettore accelerazione.
- *           Tale tipo deve essere sottotipo di Number.
+ * @param <N> il tipo che si vuole utilizzare per definire le coordinate del vettore accelerazione.
  */
 public interface Acceleration<N> {
 

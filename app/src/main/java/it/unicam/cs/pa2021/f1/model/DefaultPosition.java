@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Implementazione di default di una posizione del piano di gara.
  */
-public class DefaultPosition implements Position<StatusPosition, DefaultPosition> {
+public class DefaultPosition implements Position {
 
     private final int x;
     private final int y;
@@ -18,8 +18,8 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
      * @param x la coordinata sull'asse delle x.
      */
     public DefaultPosition( int y, int x ) {
-        this.x = x;
         this.y = y;
+        this.x = x;
     }
 
     /**
@@ -46,9 +46,8 @@ public class DefaultPosition implements Position<StatusPosition, DefaultPosition
     }
 
     @Override
-    public DefaultPosition setStatus(StatusPosition status) {
+    public void setStatus(StatusPosition status) {
         this.statusPosition = status;
-        return this;
     }
 
     @Override

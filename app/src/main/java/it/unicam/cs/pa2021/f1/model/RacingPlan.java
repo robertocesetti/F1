@@ -3,8 +3,12 @@ package it.unicam.cs.pa2021.f1.model;
 import java.util.List;
 import java.util.Optional;
 
+
 /**
- * Interfaccia che rappresenta l'intero piano di gara.
+ * Interfaccia che definisce l'intero piano di gara.
+ *
+ * @param <R> Il tipo che si vuole utilizzare per definire il veicolo.
+ * @param <P> Il tipo che si vuole utilizzare per definire la posizione.
  */
 public interface RacingPlan<R, P> {
 
@@ -52,11 +56,18 @@ public interface RacingPlan<R, P> {
     List<P> getGrid();
 
     /**
+     * Restituisce il traguardo.
+     *
+     * @return il traguardo.
+     */
+    List<P> getFinishLine();
+
+    /**
      * Aggiunge un veicolo sulla griglia di partenza, nello specifico nella posizione indicata
      * (primo = 1, secondo = 2 ...).
      *
      * @param racingVehicle il veicolo da corsa da aggiungere.
-     * @param gridPosition la posizione di partenza sulla griglia.
+     * @param gridPosition  la posizione di partenza sulla griglia.
      * @return true se il veicolo e' stato aggiunto correttamente, false altrimenti.
      */
     boolean addVehicleToGrid(R racingVehicle, int gridPosition);
