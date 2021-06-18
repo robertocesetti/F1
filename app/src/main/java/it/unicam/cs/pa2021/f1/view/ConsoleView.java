@@ -99,10 +99,7 @@ public class ConsoleView implements View {
         DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
         while (!isFinish(racingPlan)) {
             System.out.println("\n");
-            masterController.getPilots().stream()
-                    .filter(b -> b.getType().equals(PilotType.BOT))
-                    .forEach(b -> masterController.getGameEngine()
-                            .moveRacingVehicle(b.getRacingVehicle(), botController.botNextPosition(b.getRacingVehicle())));
+            masterController.setRacingVehicleMovemenet();
             printRacingPlanConsole();
         }
     }

@@ -38,6 +38,12 @@ public class DefaultMasterController implements MasterController{
         this.pilots.add(pilot);
     }
 
+    public void setRacingVehicleMovemenet () {
+        pilots.stream()
+                .filter(b -> b.getType().equals(PilotType.BOT))
+                .forEach(b -> gameEngine.moveRacingVehicle(b.getRacingVehicle(), botController.botNextPosition(b.getRacingVehicle())));
+    }
+
     public List<DefaultPilot> getPilots() {
         return this.pilots;
     }
@@ -49,4 +55,6 @@ public class DefaultMasterController implements MasterController{
     public BotController getBotController() {
         return this.botController;
     }
+
+
 }
