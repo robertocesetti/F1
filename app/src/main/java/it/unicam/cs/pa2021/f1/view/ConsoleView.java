@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class ConsoleView implements View {
 
-    private DefaultMasterController masterController = new DefaultMasterController();
+    private final DefaultMasterController masterController = new DefaultMasterController();
     private String path = "D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png";
     private Scanner scanner;
 
@@ -22,8 +22,8 @@ public class ConsoleView implements View {
         try {
             scanner = new Scanner(System.in);
             masterController.gameSettings(path);
-            masterController.configurePlayer("dam", PilotType.BOT);
-            masterController.configurePlayer("rob", PilotType.BOT);
+            allPlayers();
+            allBot();
             printRacingPlanConsole();
             statusRace();
         } catch (IOException e) {
@@ -91,7 +91,6 @@ public class ConsoleView implements View {
     }
 
     private void statusRace() throws IOException {
-        BotController botController = masterController.getBotController();
         DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
         while (!masterController.isFinish(racingPlan)) {
             System.out.println("\n");
@@ -115,7 +114,9 @@ public class ConsoleView implements View {
         return position = new DefaultPosition(y, x);
     }
 
-    private void botSettings(int numberOfBot) {
+    private void allBot() {
+        System.out.println("Inserisci il numero di giocatori bot ");
+        int numberOfBot = scanner.nextInt();
         for (int i = 1; i <= numberOfBot; i++) {
             masterController.configurePlayer("bot" + i, PilotType.BOT);
         }
@@ -128,10 +129,10 @@ public class ConsoleView implements View {
     private void allPlayers() {
         String risposta = "n";
         do {
-            System.out.println("Inserisci il nome del giocatore.");
+            System.out.println("Inserisci il nome del giocatore ");
             String nameOfPlayer = scanner.nextLine();
             playerSettings(nameOfPlayer);
-            System.out.println("Vuoi aggiungerne un altro? (s per si, n per no)");
+            System.out.println("Vuoi aggiungerne un altro? (s per si) ");
             risposta = scanner.nextLine();
         } while(risposta.equals("s"));
     }
