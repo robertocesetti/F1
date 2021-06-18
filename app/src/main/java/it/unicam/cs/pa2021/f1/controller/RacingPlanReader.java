@@ -18,7 +18,7 @@ import static java.awt.Color.*;
 /**
  * Implementazione della creazione di un piano di gara ottenuto dalla lettura di un file.
  */
-public class RacingPlanReader implements FileReader<Integer> {
+public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
 
     private final List<DefaultPosition> racingPlanPositions = new LinkedList<>();
     private final int black = BLACK.getRGB();

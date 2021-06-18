@@ -7,12 +7,12 @@ import java.io.IOException;
 /**
  * Interfaccia che definisce la lettura di un piano di gara da un file esterno.
  */
-public interface FileReader<N> {
+public interface FileReader<R> {
 
     /**
      * Restituisce un piano di gara.
      */
-    DefaultRacingPlan getRacingPlan();
+    R getRacingPlan();
 
 
     void setRacingPlan(String filePath) throws IOException;
