@@ -11,7 +11,7 @@ public interface BotIA {
     /**
      * Calcola la posizione che il veicolo dovra' raggiungere.
      *
-     * @param racingVehicle il l veicolo.
+     * @param racingVehicle il veicolo.
      * @return la posizione che il veicolo dovra' raggiungere.
      */
     DefaultPosition botNextPosition(DefaultRacingVehicle racingVehicle);

@@ -25,7 +25,7 @@ public class DefaultReferee implements Referee<DefaultPilot> {
      */
     public void createPilot(String name, DefaultRacingVehicle racingVehicle, PilotType pilotType) {
         DefaultPilot pilot = new DefaultPilot(name, racingVehicle, pilotType);
-        this.pilots.add(racingVehicle.getId(), pilot);
+        this.pilots.add(pilot);
     }
 
     @Override
