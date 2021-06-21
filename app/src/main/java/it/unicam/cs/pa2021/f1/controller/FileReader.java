@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Interfaccia che definisce la lettura di un piano di gara da un file esterno.
  *
- * @param <R> Il tipo di dato che si vuole utilizzare per definire un Piano di gara.
+ * @param <R> Il tipo che si vuole utilizzare per definire un Piano di gara.
  */
 public interface FileReader<R> {
 

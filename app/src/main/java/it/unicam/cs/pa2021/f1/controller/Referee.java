@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Interfaccia che definisce l'arbitro.
  *
- * @param <P> Il tipo di dato che si vuole utilizzare per definire il Pilota.
+ * @param <P> Il tipo che si vuole utilizzare per definire il Pilota.
  */
 public interface Referee<P> {
 

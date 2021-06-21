@@ -4,48 +4,29 @@
 package it.unicam.cs.pa2021.f1;
 
 import it.unicam.cs.pa2021.f1.view.ConsoleView;
+import it.unicam.cs.pa2021.f1.view.JavaFXView;
+import it.unicam.cs.pa2021.f1.view.View;
 
-public class App {
+import java.io.IOException;
 
-    public static void main(String[] args) {
+public class App  {
 
-        ConsoleView consoleView = new ConsoleView();
-        consoleView.open();
+    private final View view;
 
-        /*
-         //Application.launch(args);
-         RacingPlanReader tcr = new RacingPlanReader();
-         int i = 0;
-
-         DefaultRacingPlan racingPlan = null;
-         DefaultGameEngine engine = new DefaultGameEngine(racingPlan);
-
-         DefaultRacingVehicle rv = new DefaultRacingVehicle();
-         DefaultRacingVehicle rc = new DefaultRacingVehicle();
-         DefaultRacingVehicle rs = new DefaultRacingVehicle();
-         DefaultPilot bot = new DefaultPilot("bot", rv, PilotType.BOT);
-         DefaultPilot bob = new DefaultPilot("bob", rc, PilotType.BOT);
-         DefaultPilot bor = new DefaultPilot("bor", rs, PilotType.BOT);
-         BotController botController = new BotController(racingPlan);
-         //racingPlan.printRacingPlanConsole();
-
-
-         while (rv.getPosition().getY() + 1 < racingPlan.getHeight()  && rc.getPosition().getY() + 1  < racingPlan.getHeight() &&
-         rs.getPosition().getY() + 1  < racingPlan.getHeight() ) {
-         System.out.println("\n");
-         botController.botNextPosition(bot.getRacingVehicle());
-         System.out.println(bot.getRacingVehicle().getPosition().toString());
-         botController.botNextPosition(bob.getRacingVehicle());
-         System.out.println(bob.getRacingVehicle().getPosition().toString());
-         botController.botNextPosition(bor.getRacingVehicle());
-         System.out.println(bor.getRacingVehicle().getPosition().toString());
-         //racingPlan.printRacingPlanConsole();
-         i++;
-         }
-         */
+    public App (View view) {
+        this.view = view;
     }
 
-    public String getGreeting() {
-        return "Hello World!";
+    private static App createApp(String[] args){
+        return new App(new JavaFXView());
     }
+
+    private void startApp () throws IOException {
+        view.open();
+    }
+
+    public static void main(String[] args) throws IOException {
+       createApp(args).startApp();
+    }
+
 }

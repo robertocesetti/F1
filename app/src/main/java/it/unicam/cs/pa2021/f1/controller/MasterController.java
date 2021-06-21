@@ -1,5 +1,6 @@
 package it.unicam.cs.pa2021.f1.controller;
 
+import it.unicam.cs.pa2021.f1.model.DefaultRacingPlan;
 import it.unicam.cs.pa2021.f1.model.PilotType;
 
 import java.io.IOException;
@@ -20,14 +21,7 @@ public interface MasterController<P, G, B, R> {
      * @param path percorso dove e' presente il file contenente il tracciato.
      * @throws IOException se la lettura del file non e' avvenuta correttamente.
      */
-    void gameSettings(String path) throws IOException;
-
-    /**
-     * Restituisce il lettore del piano di gara.
-     *
-     * @return il lettore del piano di gara.
-     */
-    P getRacingPlanFileReader();
+    void newGame(String path) throws IOException;
 
     /**
      * Configura le impostazioni del giocatore.
@@ -39,23 +33,11 @@ public interface MasterController<P, G, B, R> {
     int configurePlayer(String name, PilotType pilotType);
 
     /**
-     * Restituisce il motore di gioco.
+     * Restituisce true se qualche veicolo ha raggiunto la fine del tracciato, false altrimenti.
      *
-     * @return il motore di gioco.
+     * @param racingPlan il piano di gara.
+     * @return true se qualche veicolo ha raggiunto la fine del tracciato, false altrimenti.
      */
-    G getGameEngine();
+    boolean isFinish(DefaultRacingPlan racingPlan);
 
-    /**
-     * Restituisce il bot controller.
-     *
-     * @return il bot controller.
-     */
-    B getBotController();
-
-    /**
-     * Restituisce l'arbitro.
-     *
-     * @return l'arbitro.
-     */
-    R getReferee();
 }

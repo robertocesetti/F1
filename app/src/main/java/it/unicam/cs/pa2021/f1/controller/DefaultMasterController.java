@@ -15,7 +15,7 @@ public class DefaultMasterController implements MasterController<RacingPlanReade
     private DefaultReferee referee;
 
     @Override
-    public void gameSettings(String path) throws IOException {
+    public void newGame(String path) throws IOException {
         racingPlanFileReader.setRacingPlan(path);
         DefaultRacingPlan racingPlan = racingPlanFileReader.getRacingPlan();
         this.gameEngine = new DefaultGameEngine(racingPlan);
@@ -23,18 +23,17 @@ public class DefaultMasterController implements MasterController<RacingPlanReade
         this.referee = new DefaultReferee();
     }
 
-    /**
-     *  Configura un giocatore.
-     *
-     * @param name del giocatore.
-     * @param pilotType il tipo (BOT o PLAYER).
-     * @return l'id del veicolo del pilota del giocatore.
-     */
+    @Override
     public int configurePlayer(String name, PilotType pilotType) {
         DefaultRacingVehicle rv = new DefaultRacingVehicle();
         racingPlanFileReader.getRacingPlan().addVehicleToGrid(rv, rv.getId());
         referee.createPilot(name, rv, pilotType);
         return  rv.getId();
+    }
+
+    @Override
+    public boolean isFinish(DefaultRacingPlan racingPlan) {
+        return racingPlan.getAllVehicles().stream().anyMatch(r -> r.getPosition().getY() + 1 >= racingPlan.getHeight());
     }
 
     /**
@@ -52,34 +51,34 @@ public class DefaultMasterController implements MasterController<RacingPlanReade
         getReferee().nextTurn();
     }
 
-    @Override
+    /**
+     * Restituisce il lettore del piano di gara.
+     *
+     * @return il lettore del piano di gara.
+     */
     public RacingPlanReader getRacingPlanFileReader() {
         return this.racingPlanFileReader;
     }
 
     /**
-     * Restituisce true se qualche veicolo ha raggiunto la fine del tracciatofalse altrimenti.
+     * Restituisce il motore di gioco.
      *
-     * @param racingPlan il piano di gara.
-     * @return true se qualche veicolo ha raggiunto la fine del tracciato, false altrimenti.
+     * @return il motore di gioco.
      */
-    public boolean isFinish(DefaultRacingPlan racingPlan) {
-        return racingPlan.getAllVehicles().stream().anyMatch(r -> r.getPosition().getY() + 1 >= racingPlan.getHeight());
-    }
+    public DefaultGameEngine getGameEngine() { return this.gameEngine; }
 
-    @Override
-    public DefaultGameEngine getGameEngine() {
-        return this.gameEngine;
-    }
+    /**
+     * Restituisce il bot controller.
+     *
+     * @return il bot controller.
+     */
+    public BotController getBotController() { return this.botController; }
 
-    @Override
-    public BotController getBotController() {
-        return this.botController;
-    }
-
-    @Override
-    public DefaultReferee getReferee() {
-        return referee;
-    }
+    /**
+     * Restituisce l'arbitro.
+     *
+     * @return l'arbitro.
+     */
+    public DefaultReferee getReferee() { return referee; }
 
 }

@@ -2,6 +2,7 @@ package it.unicam.cs.pa2021.f1.view;
 
 import it.unicam.cs.pa2021.f1.controller.DefaultMasterController;
 import it.unicam.cs.pa2021.f1.model.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class ConsoleView implements View {
     public void open() {
         try {
             scanner = new Scanner(System.in);
-            masterController.gameSettings(path);
+            masterController.newGame(path);
             allPlayers();
             allBot();
             printRacingPlanConsole();
@@ -181,4 +182,5 @@ public class ConsoleView implements View {
             risposta = scanner.nextLine();
         } while (risposta.equals("s"));
     }
+
 }

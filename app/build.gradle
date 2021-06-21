@@ -13,6 +13,9 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
+sourceCompatibility = 11
+targetCompatibility = 11
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -32,10 +35,14 @@ application {
 }
 
 javafx {
-    version = "14"
-    modules = [ 'javafx.controls' ]
+    version = "11.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 run {
     standardInput = System.in
+}
+
+test {
+    useJUnitPlatform()
 }

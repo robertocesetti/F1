@@ -47,16 +47,26 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
      * @param racingVehicle il veicolo.
      */
     public List<DefaultPosition> allNearPosition(DefaultRacingVehicle racingVehicle) {
-        List<DefaultPosition> safePositions;
         List<DefaultPosition> positions = filteredNearPositions(racingVehicle);
         if (positions.isEmpty()) {
             racingVehicle.updateAcceleration(0, 0);
             positions = filteredNearPositions(racingVehicle);
         }
-        safePositions = positions.stream().filter(p -> p.getY() <= racingPlan.getHeight() - 1)
+        return getCorrectPositions(positions);
+    }
+
+    /**
+     * Restituisce solo le posizioni raggiungibili corrette.
+     *
+     * @param positions la lista di posizioni da controllare.
+     * @return le lista di posizioni raggiungibili corrette.
+     */
+    private List<DefaultPosition> getCorrectPositions(List<DefaultPosition> positions) {
+        List<DefaultPosition> correctPositions;
+        correctPositions = positions.stream().filter(p -> p.getY() <= racingPlan.getHeight() - 1)
                 .collect(Collectors.toList());
-        if(safePositions.isEmpty()) safePositions = racingPlan.getFinishLine();
-        return safePositions;
+        if(correctPositions.isEmpty()) correctPositions = racingPlan.getFinishLine();
+        return correctPositions;
     }
 
     /**
