@@ -20,10 +20,14 @@ public class DefaultAcceleration implements Acceleration<Integer> {
     }
 
     @Override
-    public Integer getX() { return this.x; }
+    public Integer getX() {
+        return this.x;
+    }
 
     @Override
-    public void setX(Integer x) { this.x = x; }
+    public void setX(Integer x) {
+        this.x = x;
+    }
 
     @Override
     public Integer getY() {
@@ -31,6 +35,8 @@ public class DefaultAcceleration implements Acceleration<Integer> {
     }
 
     @Override
-    public void setY(Integer y) { this.y = y; }
+    public void setY(Integer y) {
+        this.y = y;
+    }
 }
 

@@ -17,7 +17,7 @@ public class DefaultPosition implements Position {
      * @param y la coordinata sull'asse delle y.
      * @param x la coordinata sull'asse delle x.
      */
-    public DefaultPosition( int y, int x ) {
+    public DefaultPosition(int y, int x) {
         this.y = y;
         this.x = x;
     }

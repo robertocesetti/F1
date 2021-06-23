@@ -24,6 +24,7 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
     private final int white = WHITE.getRGB();
     private final int red = RED.getRGB();
     private DefaultRacingPlan racingPlan;
+    private String path;
 
     /**
      * Legge l'immagine dal file.
@@ -31,6 +32,7 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
      * @throws IOException "if an error occurs during reading or when not able to create required ImageInputStream".
      */
     private void read(String filePath) throws IOException {
+        this.path = filePath;
         BufferedImage image = ImageIO.read(new File(filePath));
         racingPlanPositions(image.getHeight(), image.getWidth());
         racingPlan = new DefaultRacingPlan(image.getHeight(), image.getWidth(), this.setStatusPositionByImage(image));
@@ -40,20 +42,20 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
      * Crea le posizioni del piano di gara.
      *
      * @param height altezza del piano di gara.
-     * @param width larghezza del piano di gara.
+     * @param width  larghezza del piano di gara.
      */
     private void racingPlanPositions(Integer height, Integer width) {
-        if (height > 100 || width > 100)
-            throw new IllegalArgumentException("L'immagine passata ha dimensioni troppo elevate (max. 100 x 100)");
-        int y = height - 1;
+        if (height > 500 || width > 500)
+            throw new IllegalArgumentException("L'immagine passata ha dimensioni troppo elevate (max. 500 x 500)");
+        int y = 0;
         int x = 0;
-        while (y >= 0) {
+        while (y < height) {
             while (x < width) {
                 racingPlanPositions.add(new DefaultPosition(y, x));
                 x++;
             }
             x = 0;
-            y--;
+            y++;
         }
     }
 
@@ -66,7 +68,7 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
      */
     private List<DefaultPosition> setStatusPositionByImage(BufferedImage image) {
         return racingPlanPositions.stream().peek(p -> {
-            int rgb = image.getRGB(p.getX(), image.getHeight() - (p.getY() + 1));
+            int rgb = image.getRGB(p.getX(), p.getY());
             if (rgb == red) {
                 p.setStatus(StatusPosition.GRID);
             } else if (rgb == white) {
@@ -81,12 +83,16 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
 
     @Override
     public DefaultRacingPlan getRacingPlan() throws IllegalArgumentException {
-        if(racingPlan == null) throw new IllegalArgumentException("Non e' stato impostato un circuito");
+        if (racingPlan == null) throw new IllegalArgumentException("Non e' stato impostato un circuito");
         return racingPlan;
     }
 
     @Override
-    public void setRacingPlan(String filePath) throws IOException  {
+    public void setRacingPlan(String filePath) throws IOException {
         read(filePath);
+    }
+
+    public String getPath() {
+        return path;
     }
 }

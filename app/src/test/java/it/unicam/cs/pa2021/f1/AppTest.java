@@ -3,12 +3,12 @@
  */
 package it.unicam.cs.pa2021.f1;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App(null);
+    @Test
+    public void testAppHasAGreeting() {
 
     }
 }

@@ -15,13 +15,14 @@ public class DefaultReferee implements Referee<DefaultPilot> {
     private final List<DefaultPilot> pilots = new ArrayList<>();
     private int turn = 0;
     private int numberPilots = 0;
+    private boolean isFinish;
 
     /**
      * Crea il pilota.
      *
-     * @param name nome del pilota.
+     * @param name          nome del pilota.
      * @param racingVehicle veicolo.
-     * @param pilotType tipo di pilota.
+     * @param pilotType     tipo di pilota.
      */
     public void createPilot(String name, DefaultRacingVehicle racingVehicle, PilotType pilotType) {
         DefaultPilot pilot = new DefaultPilot(name, racingVehicle, pilotType);
@@ -55,4 +56,21 @@ public class DefaultReferee implements Referee<DefaultPilot> {
         this.turn++;
     }
 
+    /**
+     * Restituisce true se la gara e' terminata, false altrimenti.
+     *
+     * @return true se la gara e' terminata, false altrimenti.
+     */
+    public boolean getIsFinish() {
+        return isFinish;
+    }
+
+    /**
+     * Imposta un valore booleano alla variabile isFinish.
+     *
+     * @param finish il valore booleano.
+     */
+    public void setFinish(boolean finish) {
+        isFinish = finish;
+    }
 }

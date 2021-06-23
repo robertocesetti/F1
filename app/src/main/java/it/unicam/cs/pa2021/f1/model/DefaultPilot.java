@@ -3,7 +3,7 @@ package it.unicam.cs.pa2021.f1.model;
 /**
  * Implementazione di default di un pilota.
  */
-public class DefaultPilot implements Pilot<DefaultRacingVehicle>{
+public class DefaultPilot implements Pilot<DefaultRacingVehicle> {
 
     private final String name;
     private final DefaultRacingVehicle racingVehicle;
@@ -12,7 +12,7 @@ public class DefaultPilot implements Pilot<DefaultRacingVehicle>{
     /**
      * Costruttore del pilota.
      *
-     * @param name il nome del pilota.
+     * @param name          il nome del pilota.
      * @param racingVehicle il veicolo del pilota.
      */
     public DefaultPilot(String name, DefaultRacingVehicle racingVehicle, PilotType type) {

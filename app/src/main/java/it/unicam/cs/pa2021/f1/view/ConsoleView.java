@@ -2,19 +2,19 @@ package it.unicam.cs.pa2021.f1.view;
 
 import it.unicam.cs.pa2021.f1.controller.DefaultMasterController;
 import it.unicam.cs.pa2021.f1.model.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Implementazione per una vista su console.
+ * Implementazione per una vista su Console.
  */
 public class ConsoleView implements View {
 
     private final DefaultMasterController masterController = new DefaultMasterController();
-    private String path = "D:\\Workspace Eclipse\\F1\\app\\src\\main\\resources\\Immagine.png";
+    private String path = Objects.requireNonNull(getClass().getResourceAsStream("/Immagine.png")).toString();
     private Scanner scanner;
 
     @Override
@@ -37,25 +37,7 @@ public class ConsoleView implements View {
 
     @Override
     public void close() {
-        System.out.println("Bye!!!! <3");
-    }
-
-    /**
-     * Restituisce il percorso dove e' salvato il file.
-     *
-     * @return il percorso dove e' salvato il file.
-     */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * Imposta il percorso dove e' salvato il file.
-     *
-     * @param path il percorso dove e' salvato il file.
-     */
-    public void setPath(String path) {
-        this.path = path;
+        System.out.println("Bye!!");
     }
 
     /**
@@ -63,9 +45,9 @@ public class ConsoleView implements View {
      */
     private void printRacingPlanConsole() throws IOException {
         DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
-        int y = racingPlan.getHeight() - 1;
+        int y = 0;
         int x = 0;
-        while (y >= 0) {
+        while (y < racingPlan.getHeight()) {
             while (x < racingPlan.getWidth()) {
                 Optional<DefaultPosition> position = racingPlan.getPosition(x, y);
                 position.ifPresent(defaultPosition -> this.drawRacingPlanPositions(defaultPosition, racingPlan));
@@ -73,7 +55,7 @@ public class ConsoleView implements View {
             }
             System.out.print("\n");
             x = 0;
-            y--;
+            y++;
         }
     }
 
@@ -90,13 +72,13 @@ public class ConsoleView implements View {
         }
         switch (position.getStatus()) {
             case IN:
-                System.out.print("-  ");
+                System.out.print("(" + position.getX() + ", " + position.getY() + ")");
                 break;
             case GRID:
-                System.out.print("G  ");
+                System.out.print("(" + position.getX() + ", " + position.getY() + ")");
                 break;
             case FINISH:
-                System.out.print("F  ");
+                System.out.print("(" + position.getX() + ", " + position.getY() + ")");
                 break;
             default:
                 System.out.print("O  ");
@@ -115,13 +97,11 @@ public class ConsoleView implements View {
                 System.out.println("\n");
                 DefaultPilot pilot = masterController.getReferee().pilotTurn();
                 masterController.setRacingVehicleMovemenet(pilot, positionByPilot(pilot));
-                //TODO masterController.getRanking();
                 printRacingPlanConsole();
-            } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Eccezione: " + e.getMessage());
             }
         }
-        //TODO masterController.getWinner();
         System.out.println("Fine della gara!!");
         System.out.println("Il vincitore e': ");
     }
@@ -162,18 +142,19 @@ public class ConsoleView implements View {
 
     /**
      * Crea un player in base a cio' che e' stato inserito dall'utente sulla console.
+     *
      * @param name il nome del player.
      * @return l'id del veicolo del player.
      */
     private int playerSettings(String name) {
-       return masterController.configurePlayer(name, PilotType.PLAYER);
+        return masterController.configurePlayer(name, PilotType.PLAYER);
     }
 
     /**
      * Permette di creare piu' players.
      */
     private void allPlayers() {
-        String risposta = "n";
+        String risposta;
         do {
             System.out.println("Inserisci il nome del giocatore ");
             String nameOfPlayer = scanner.nextLine();

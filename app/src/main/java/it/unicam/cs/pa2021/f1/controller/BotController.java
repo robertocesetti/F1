@@ -11,7 +11,7 @@ import java.util.Random;
  * Implementazione di default di un controller per il bot.
  * Ha la responsabilita' di calcolare la posizione che il veicolo del bot dovra' raggiungere.
  */
-public class BotController implements  BotIA {
+public class BotController implements BotIA {
 
     private final DefaultGameEngine defaultGameEngine;
     Random random = new Random();
@@ -41,9 +41,9 @@ public class BotController implements  BotIA {
      * @param allPositions la lista di tutte le posizioni dalla quale verra' scelta una da raggiungere.
      * @return la posizione assegnata.
      */
-    private DefaultPosition assignPosition( List<DefaultPosition> allPositions ){
+    private DefaultPosition assignPosition(List<DefaultPosition> allPositions) {
         DefaultPosition nextPosition = allPositions.get(random.nextInt(allPositions.size()));
-        while (checkBusy(nextPosition)){
+        while (checkBusy(nextPosition)) {
             allPositions.remove(nextPosition);
             nextPosition = allPositions.get(random.nextInt(allPositions.size()));
         }

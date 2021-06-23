@@ -1,7 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
 /**
- *  Interfaccia che definisce un pilota.
+ * Interfaccia che definisce un pilota.
  *
  * @param <R> Il tipo che si vuole utilizzare per definire il veicolo.
  */

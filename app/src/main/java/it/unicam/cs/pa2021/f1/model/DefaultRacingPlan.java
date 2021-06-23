@@ -75,7 +75,9 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     @Override
-    public List<DefaultPosition> getFinishLine() { return this.finishLine; }
+    public List<DefaultPosition> getFinishLine() {
+        return this.finishLine;
+    }
 
     /**
      * Crea la griglia di partenza del tracciato.

@@ -63,9 +63,9 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
      */
     private List<DefaultPosition> getCorrectPositions(List<DefaultPosition> positions) {
         List<DefaultPosition> correctPositions;
-        correctPositions = positions.stream().filter(p -> p.getY() <= racingPlan.getHeight() - 1)
+        correctPositions = positions.stream().filter(p -> p.getY() >= 0)
                 .collect(Collectors.toList());
-        if(correctPositions.isEmpty()) correctPositions = racingPlan.getFinishLine();
+        if (correctPositions.isEmpty()) correctPositions = racingPlan.getFinishLine();
         return correctPositions;
     }
 
@@ -77,7 +77,7 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
      */
     private List<DefaultPosition> filteredNearPositions(DefaultRacingVehicle racingVehicle) {
         return getNearPositions(racingVehicle).parallelStream()
-                .filter(p -> p.getY() >= racingVehicle.getPosition().getY()).collect(Collectors.toList());
+                .filter(p -> p.getY() <= racingVehicle.getPosition().getY()).collect(Collectors.toList());
     }
 
     /**
@@ -88,7 +88,7 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
      */
     private List<DefaultPosition> getNearPositions(DefaultRacingVehicle racingVehicle) {
         int traslateX = racingVehicle.getPosition().getX() + racingVehicle.getAcceleration().getX();
-        int traslateY = racingVehicle.getPosition().getY() + racingVehicle.getAcceleration().getY();
+        int traslateY = racingVehicle.getPosition().getY() - racingVehicle.getAcceleration().getY();
         return Stream.of(this.center(traslateX, traslateY),
                 this.above(traslateX, traslateY),
                 this.aboveLeft(traslateX, traslateY),
@@ -109,15 +109,15 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
     }
 
     public Optional<DefaultPosition> above(int x, int y) {
-        return near(x, y, 0, +1);
+        return near(x, y, 0, -1);
     }
 
     public Optional<DefaultPosition> aboveLeft(int x, int y) {
-        return near(x, y, -1, +1);
+        return near(x, y, -1, -1);
     }
 
     public Optional<DefaultPosition> aboveRight(int x, int y) {
-        return near(x, y, +1, +1);
+        return near(x, y, +1, -1);
     }
 
     public Optional<DefaultPosition> right(int x, int y) {
@@ -129,15 +129,15 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
     }
 
     public Optional<DefaultPosition> below(int x, int y) {
-        return near(x, y, 0, -1);
+        return near(x, y, 0, +1);
     }
 
     public Optional<DefaultPosition> belowLeft(int x, int y) {
-        return near(x, y, -1, -1);
+        return near(x, y, -1, +1);
     }
 
     public Optional<DefaultPosition> belowRight(int x, int y) {
-        return near(x, y, +1, -1);
+        return near(x, y, +1, +1);
     }
 
     /**

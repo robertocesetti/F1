@@ -1,18 +1,21 @@
 package it.unicam.cs.pa2021.f1.model;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Implementazioni di default di un veicolo da corsa.
  */
-public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, DefaultAcceleration> {
+public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, DefaultAcceleration, Image> {
 
-    private final int id;
     private static int idVehicle = 0;
+    private final int id;
     private DefaultPosition position;
     private List<DefaultPosition> trajectory;
     private DefaultAcceleration acceleration;
+    private Image skin;
 
     /**
      * Costruttore di un veicolo da corsa.
@@ -23,12 +26,16 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
         this.trajectory = new ArrayList<>();
     }
 
+    public static void resetId() {
+        idVehicle = 0;
+    }
+
     @Override
     public int getId() {
         return this.id;
     }
 
-    private int nextId () {
+    private int nextId() {
         idVehicle++;
         return idVehicle;
     }
@@ -60,13 +67,27 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
     }
 
     @Override
-    public void setPosition(DefaultPosition position) throws NullPointerException {
-        if (position == null) throw new NullPointerException("La posizione che si vuole assegnare non e' valida");
+    public void setPosition(DefaultPosition newPosition) throws NullPointerException {
+        if (newPosition == null) throw new NullPointerException("La posizione che si vuole assegnare non e' valida");
         if (this.position != null) {
             this.updateTrajectory(this.position);
-            this.updateAcceleration(position.getX() - this.position.getX(), position.getY() - this.position.getY());
+            this.updateAcceleration(newPosition.getX() - this.position.getX(), this.position.getY() - newPosition.getY());
         }
-        this.position = position;
+        this.position = newPosition;
+    }
+
+    @Override
+    public Image getSkin() {
+        return this.skin;
+    }
+
+    /**
+     * Imposta la skin del veicolo.
+     *
+     * @param skin del veicolo.
+     */
+    public void setSkin(Image skin) {
+        this.skin = skin;
     }
 
     @Override
@@ -82,7 +103,8 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
     @Override
     public void updateTrajectory(DefaultPosition position) throws NullPointerException {
         if (position == null) throw new NullPointerException("La posizione passata e' nulla");
-        this.trajectory.add(position);    }
+        this.trajectory.add(position);
+    }
 
     @Override
     public boolean isOut() {

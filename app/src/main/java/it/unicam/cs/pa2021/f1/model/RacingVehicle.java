@@ -7,8 +7,9 @@ import java.util.List;
  *
  * @param <P> il tipo che si vuole utilizzare per definire la posizione.
  * @param <A> il tipo che si vuole utilizzare per definire l'accelerazione.
+ * @param <S> il tipo che si vuole utilizzare per definire la skin del veicolo.
  */
-public interface RacingVehicle<P, A> {
+public interface RacingVehicle<P, A, S> {
 
     /**
      * Restituisce l'identificativo del veicolo.
@@ -44,6 +45,13 @@ public interface RacingVehicle<P, A> {
      * @param position la nuova posizione del veicolo.
      */
     void setPosition(P position);
+
+    /**
+     * Restituisce la skin del veicolo.
+     *
+     * @return la skin del veicolo.
+     */
+    S getSkin();
 
     /**
      * Restituisce la traiettoria del veicolo.

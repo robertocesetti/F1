@@ -1,58 +1,59 @@
 package it.unicam.cs.pa2021.f1.view;
 
 import it.unicam.cs.pa2021.f1.controller.DefaultMasterController;
-import it.unicam.cs.pa2021.f1.model.PilotType;
-import javafx.event.ActionEvent;
+import it.unicam.cs.pa2021.f1.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.logging.Logger;
 
+/**
+ * Controller principale della vista in JavaFX.
+ */
 public class JavaFXController implements PrincipleController {
 
-    private final List<String> playerName = new ArrayList<>();
-    FileChooser fc = new FileChooser();
-    private JavaFXView jfx;
+    private static final Logger LOGGER = Logger.getLogger(JavaFXController.class.getName());
+    private final Image track;
+    private final Image grid;
+    private final Image nearPosition;
+    private List<DefaultPosition> positionList;
     private DefaultMasterController masterController;
-    private String path;
-    private int numberOfBots = 0;
-    private int numberOfPlayer = 0;
     @FXML
-    private Label labelBot;
+    private Button startRaceButton;
 
     @FXML
-    private Label labelPlayer;
+    private Canvas canvas;
 
-    @FXML
-    private Button removeBotId;
-
-    @FXML
-    private Button removePlayerId;
-
-    @FXML
-    private TextField playerNameInput;
-
-    public void setJfx(JavaFXView jfx) {
-        this.jfx = jfx;
+    public JavaFXController() {
+        track = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/asfalto.jpg")));
+        grid = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/grid.jpg")));
+        nearPosition = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/nearPosition.png")));
     }
 
-    @Override
-    public void setMasterController(DefaultMasterController masterController) {
-        this.masterController = masterController;
-        System.out.println(this.masterController + " " + masterController);
+
+    @FXML
+    public void handleNewMatch() {
+        newScene("/start.fxml");
+        setCanvas();
+        setStartButton();
+    }
+
+    private void setStartButton() {
+        startRaceButton.setDisable(false);
+        startRaceButton.setVisible(true);
     }
 
     private void newScene(String filePath) {
@@ -63,7 +64,7 @@ public class JavaFXController implements PrincipleController {
             loader.setLocation(getClass().getResource(filePath));
             Parent root = loader.load();
             PrincipleController controller = loader.getController();
-            controller.setMasterController(this.masterController);
+            controller.controllerSettings(this.masterController);
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException e) {
@@ -71,101 +72,80 @@ public class JavaFXController implements PrincipleController {
         }
     }
 
-    @FXML
-    public void handleNewMatch() {
-        newScene("/start.fxml");
+    @Override
+    public void controllerSettings(DefaultMasterController masterController) {
+        this.masterController = masterController;
+    }
+
+    private void setCanvas() {
+        DefaultRacingPlan racingPlan = masterController.getRacingPlanFileReader().getRacingPlan();
+        racingPlan.getAllPositions().forEach(p -> {
+            if (p.getStatus().equals(StatusPosition.IN)) {
+                canvas.getGraphicsContext2D().drawImage(track, p.getX() * 32, p.getY() * 32, 32, 32);
+            }
+            if (p.getStatus().equals(StatusPosition.FINISH) || p.getStatus().equals(StatusPosition.GRID)) {
+                canvas.getGraphicsContext2D().drawImage(grid, p.getX() * 32, p.getY() * 32, 32, 32);
+            }
+        });
+        setCarCanvas();
     }
 
     @FXML
-    public void chooseFile() throws IOException {
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File ", "*.png"));
-        File file = fc.showOpenDialog(null);
-        this.path = file.getAbsolutePath();
-        System.out.println(path);
+    public void startRace() {
+        startRaceButton.setDisable(true);
+        this.gameLoop();
+    }
+
+    private void gameLoop() {
+        while (!masterController.isFinish(masterController.getRacingPlanFileReader().getRacingPlan())) {
+            try {
+                DefaultPilot pilot = masterController.getReferee().pilotTurn();
+                if (pilot.getType().equals(PilotType.PLAYER)) {
+                    nearPositions(pilot);
+                    return;
+                } else {
+                    masterController.setRacingVehicleMovemenet(pilot, null);
+                    setCanvas();
+                }
+            } catch (IllegalArgumentException e) {
+                LOGGER.warning(e.getMessage());
+            }
+        }
+        finish();
+    }
+
+    private void nearPositions(DefaultPilot pilot) {
+        this.positionList = masterController.getGameEngine().allNearPosition(pilot.getRacingVehicle());
+        positionList.forEach(p -> canvas.getGraphicsContext2D().drawImage(nearPosition, p.getX() * 32, p.getY() * 32, 32, 32));
+    }
+
+    private void setCarCanvas() {
+        masterController.getRacingPlanFileReader().getRacingPlan().getAllVehicles().forEach(c -> canvas.getGraphicsContext2D().drawImage(c.getSkin(), c.getPosition().getX() * 32, c.getPosition().getY() * 32, 32, 32));
     }
 
     @FXML
-    public void addBot() {
-        numberOfBots++;
-        labelBot.setText(String.valueOf(this.numberOfBots));
-        removeBotId.setDisable(false);
-    }
-
-    @FXML
-    public void removeBot() {
-        numberOfBots--;
-        labelBot.setText(String.valueOf(this.numberOfBots));
-        if (numberOfBots == 0) removeBotId.setDisable(true);
-    }
-
-    @FXML
-    public void addPlayer() {
-        newScene("/player.fxml");
-        numberOfPlayer++;
-        labelPlayer.setText(String.valueOf(this.numberOfPlayer));
-        removePlayerId.setDisable(false);
-    }
-
-    @FXML
-    public void removePlayer() {
-        this.playerName.remove(playerName.size() - 1);
-        numberOfPlayer--;
-        labelPlayer.setText(String.valueOf(this.numberOfPlayer));
-        if (numberOfPlayer == 0) removePlayerId.setDisable(true);
-    }
-
-    @FXML
-    public void setPlayerName(ActionEvent actionEvent) {
-        this.playerName.add(playerNameInput.getText());
-        doClose(actionEvent);
-    }
-
-    @FXML
-    public void startGame(ActionEvent actionEvent) {
-        if (numberOfPlayer + numberOfBots < 2) {
-            generatAlert("Non ci sono abbastanza giocatori");
+    public void mouseClicked(MouseEvent e) {
+        if (masterController.getReferee().getIsFinish()) {
             return;
         }
-        if (this.path == null) {
-            generatAlert("Il path passato non e' valido");
-            return;
-        }
-        try {
-            System.out.println(masterController);
-            masterController.newGame(this.path);
-            playerName.forEach(p -> masterController.configurePlayer(p, PilotType.PLAYER));
-            configureBot();
-            doClose(actionEvent);
-            newScene("/game.fxml");
-        } catch (IOException e) {
-            generatAlert("File non trovato.");
-            this.path = null;
-        }
-    }
-
-
-    private void configureBot() {
-        for (int i = 1; i <= numberOfBots; i++) {
-            masterController.configurePlayer("bot" + i, PilotType.BOT);
+        double x = e.getX();
+        double y = e.getY();
+        Optional<DefaultPosition> position = this.positionList.stream().filter(p -> {
+            if (p.getX() * 32 < x && x < (p.getX() + 1) * 32) {
+                return p.getY() * 32 < y && y < (p.getY() + 1) * 32;
+            }
+            return false;
+        }).findFirst();
+        if (position.isPresent()) {
+            masterController.setRacingVehicleMovemenet(masterController.getReferee().pilotTurn(), position.get());
+            setCanvas();
+            this.gameLoop();
+        } else {
+            generateErrorAlert("Posizione selezionata non valida.");
         }
     }
 
-    private void generatAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Attenzione!!!!");
-        alert.setHeaderText("Sono stati riscontrati dei problemi:");
-        alert.setContentText(msg);
-        alert.showAndWait();
+    private void finish() {
+        generateSuccessAlert("Partita terminata!");
     }
-
-    private void doClose(ActionEvent actionEvent) {
-        ((Stage) ((Button) actionEvent.getSource()).getScene().getWindow()).close();
-    }
-
-    @FXML
-    public void cancel(ActionEvent actionEvent) {
-        System.out.println("Cancel!");
-        doClose(actionEvent);
-    }
-
 }
