@@ -14,7 +14,6 @@ public class DefaultReferee implements Referee<DefaultPilot> {
 
     private final List<DefaultPilot> pilots = new ArrayList<>();
     private int turn = 0;
-    private int numberPilots = 0;
     private boolean isFinish;
 
     /**
@@ -36,17 +35,8 @@ public class DefaultReferee implements Referee<DefaultPilot> {
 
     @Override
     public DefaultPilot pilotTurn() {
-        this.numberPilots = pilots.size();
+        int numberPilots = pilots.size();
         return pilots.get(turn % numberPilots);
-    }
-
-    /**
-     * Restituisce il numero del turno della partita.
-     *
-     * @return Il numero del turno della partita.
-     */
-    public int getNumberOfTurn() {
-        return this.turn / this.numberPilots;
     }
 
     /**

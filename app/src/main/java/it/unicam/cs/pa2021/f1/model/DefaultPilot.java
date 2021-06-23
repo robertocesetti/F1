@@ -1,5 +1,7 @@
 package it.unicam.cs.pa2021.f1.model;
 
+import java.util.Objects;
+
 /**
  * Implementazione di default di un pilota.
  */
@@ -36,4 +38,16 @@ public class DefaultPilot implements Pilot<DefaultRacingVehicle> {
         return this.type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DefaultPilot pilot = (DefaultPilot) o;
+        return name.equals(pilot.name) && racingVehicle.equals(pilot.racingVehicle) && type == pilot.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, racingVehicle, type);
+    }
 }

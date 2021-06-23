@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Implementazioni di default di un veicolo da corsa.
@@ -111,4 +112,16 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
         return this.position.getStatus().equals(StatusPosition.OUT);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DefaultRacingVehicle that = (DefaultRacingVehicle) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
