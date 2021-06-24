@@ -20,42 +20,47 @@
          </padding>
       </Label>
       <Button layoutX="481.0" layoutY="45.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose File" />
-      <Label layoutX="151.0" layoutY="123.0" prefHeight="30.0" prefWidth="147.0" text="Number of Bots">
+      <Label layoutX="29.0" layoutY="124.0" prefHeight="30.0" prefWidth="147.0" text="Number of Bots">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="addBotId" layoutX="28.0" layoutY="122.0" mnemonicParsing="false" onAction="#addBot" text="Add Bot">
+      <Button fx:id="addBotId" layoutX="28.0" layoutY="180.0" mnemonicParsing="false" onAction="#addBot" text="Add Bot">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="260.0" layoutY="210.0" mnemonicParsing="false" onAction="#addPlayer" text="Add Player">
+      <Button layoutX="29.0" layoutY="330.0" mnemonicParsing="false" onAction="#addPlayer" text="Add Player">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Label fx:id="labelBot" layoutX="331.0" layoutY="130.0" prefHeight="17.0" prefWidth="61.0" text="0" />
-      <Button fx:id="removeBotId" disable="true" layoutX="418.0" layoutY="123.0" mnemonicParsing="false" onAction="#removeBot" text="Remove Bot">
+      <Label fx:id="labelBot" layoutX="206.0" layoutY="131.0" prefHeight="17.0" prefWidth="61.0" text="0" />
+      <Button fx:id="removeBotId" disable="true" layoutX="143.0" layoutY="180.0" mnemonicParsing="false" onAction="#removeBot" text="Remove Bot">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button cancelButton="true" layoutX="157.0" layoutY="330.0" mnemonicParsing="false" onAction="#cancel" text="Cancel">
+      <Button cancelButton="true" layoutX="151.0" layoutY="417.0" mnemonicParsing="false" onAction="#cancel" text="Cancel">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button defaultButton="true" layoutX="338.0" layoutY="330.0" mnemonicParsing="false" onAction="#startGame" text="Start">
+      <Button defaultButton="true" layoutX="339.0" layoutY="417.0" mnemonicParsing="false" onAction="#startGame" text="Start">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <TextField fx:id="playerNameInput" layoutX="28.0" layoutY="213.0" prefHeight="25.0" prefWidth="196.0" promptText="Player name" />
-      <ScrollPane layoutX="372.0" layoutY="186.0" prefHeight="123.0" prefWidth="213.0">
+      <TextField fx:id="playerNameInput" layoutX="28.0" layoutY="284.0" prefHeight="25.0" prefWidth="232.0" promptText="Player name" />
+      <ScrollPane layoutX="345.0" layoutY="180.0" prefHeight="123.0" prefWidth="213.0">
          <content>
-            <ListView fx:id="lisOfPlayers" prefHeight="228.0" prefWidth="209.0" />
+            <ListView fx:id="lisOfPlayers" prefHeight="158.0" prefWidth="201.0" />
          </content>
       </ScrollPane>
+      <Label layoutX="252.0" layoutY="87.0" opacity="0.36" prefHeight="20.0" prefWidth="324.0" text="go to:&quot;..\app\build\resources\main\racingPlan.png&quot;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

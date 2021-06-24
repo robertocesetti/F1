@@ -51,8 +51,12 @@ public class GameSettingsController implements PrincipleController {
     public void chooseFile() {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File ", "*.png"));
         File file = fc.showOpenDialog(null);
-        this.path = file.getAbsolutePath();
-        LOGGER.info(path);
+        if (file == null) {
+            generateErrorAlert("File selezionato non valido, riselezionare!");
+        } else {
+            this.path = file.getAbsolutePath();
+            LOGGER.info(path);
+        }
     }
 
     @FXML
