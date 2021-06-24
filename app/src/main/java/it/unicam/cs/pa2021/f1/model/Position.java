@@ -7,7 +7,7 @@ public interface Position {
 
     /**
      * Restituisce lo stato di una posizione del tracciato
-     * ossia se si trova all'interno della pista o meno.
+     * ossia se si trova all'interno della pista, fuori, sulla griglia o sul traguardo.
      *
      * @return lo stato della posizione.
      */

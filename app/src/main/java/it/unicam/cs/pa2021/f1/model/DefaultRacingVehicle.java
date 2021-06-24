@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Implementazioni di default di un veicolo da corsa.
+ * Implementazione di default di un veicolo da corsa.
  */
 public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, DefaultAcceleration, Image> {
 
@@ -82,11 +82,7 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
         return this.skin;
     }
 
-    /**
-     * Imposta la skin del veicolo.
-     *
-     * @param skin del veicolo.
-     */
+    @Override
     public void setSkin(Image skin) {
         this.skin = skin;
     }
@@ -105,11 +101,6 @@ public class DefaultRacingVehicle implements RacingVehicle<DefaultPosition, Defa
     public void updateTrajectory(DefaultPosition position) throws NullPointerException {
         if (position == null) throw new NullPointerException("La posizione passata e' nulla");
         this.trajectory.add(position);
-    }
-
-    @Override
-    public boolean isOut() {
-        return this.position.getStatus().equals(StatusPosition.OUT);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Test sulla correttezza dell'assegnazione del turno, da parte dell'arbitro, ai giocatori.
+ * Test sulla correttezza dell'assegnazione del turno da parte dell'arbitro ai giocatori.
  */
 class DefaultRefereeTest {
 

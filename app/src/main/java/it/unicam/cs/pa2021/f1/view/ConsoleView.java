@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Implementazione per una vista su Console.
+ * Implementazione di una vista su Console.
  */
 public class ConsoleView implements View {
 
@@ -110,7 +110,7 @@ public class ConsoleView implements View {
      * Sposta il veicolo del pilota.
      *
      * @param pilot il pilota.
-     * @return la posizione in cui e' verra' spostato.
+     * @return la posizione in cui verra' spostato.
      */
     private DefaultPosition positionByPilot(DefaultPilot pilot) {
         if (pilot.getType().equals(PilotType.BOT)) {

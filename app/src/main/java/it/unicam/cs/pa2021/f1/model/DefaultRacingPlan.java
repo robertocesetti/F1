@@ -120,20 +120,15 @@ public class DefaultRacingPlan implements RacingPlan<DefaultRacingVehicle, Defau
     }
 
     @Override
-    public boolean addVehicleToGrid(DefaultRacingVehicle racingVehicle, int gridPosition) throws NullPointerException, IllegalArgumentException {
+    public void addVehicleToGrid(DefaultRacingVehicle racingVehicle, int gridPosition) throws NullPointerException, IllegalArgumentException {
         if (racingVehicle == null)
             throw new NullPointerException("Il veicolo non puo' essere nullo");
         if (grid.size() < gridPosition || gridPosition <= 0)
             throw new IllegalArgumentException("La griglia non ha la posizione di partenza indicata");
-        try {
             if (this.isBusy(this.grid.get(gridPosition - 1)).isPresent())
                 throw new IllegalArgumentException("La posizione " + gridPosition + " e' gia' occupata");
             racingVehicle.setPosition(this.grid.get(gridPosition - 1));
             allVehicles.add(racingVehicle);
-            return true;
-        } catch (NullPointerException e) {
-            return false;
-        }
     }
 
 }

@@ -54,6 +54,13 @@ public interface RacingVehicle<P, A, S> {
     S getSkin();
 
     /**
+     * Imposta la skin del veicolo.
+     *
+     * @param skin del veicolo.
+     */
+    void setSkin(S skin);
+
+    /**
      * Restituisce la traiettoria del veicolo.
      *
      * @return la traiettoria del veicolo, ossia la lista delle posizioni occupate durante la gara.
@@ -74,10 +81,4 @@ public interface RacingVehicle<P, A, S> {
      */
     void updateTrajectory(P position);
 
-    /**
-     * Restituisce true se il veicolo si trova fuori pista, false altrimenti.
-     *
-     * @return true se il veicolo si trova fuori pista, false altrimenti.
-     */
-    boolean isOut();
 }

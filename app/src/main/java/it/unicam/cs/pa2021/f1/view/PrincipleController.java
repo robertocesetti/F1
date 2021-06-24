@@ -9,7 +9,7 @@ import javafx.scene.control.Alert;
 public interface PrincipleController {
 
     /**
-     * Imposta in controllore principale del controller MVC.
+     * Imposta il controllore principale del controller MVC.
      *
      * @param masterController il controller principale del controller MVC.
      */

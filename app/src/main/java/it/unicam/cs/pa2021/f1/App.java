@@ -3,6 +3,7 @@
  */
 package it.unicam.cs.pa2021.f1;
 
+import it.unicam.cs.pa2021.f1.view.ConsoleView;
 import it.unicam.cs.pa2021.f1.view.JavaFXView;
 import it.unicam.cs.pa2021.f1.view.View;
 
@@ -18,6 +19,7 @@ public class App {
 
     private static App createApp(String[] args) {
         return new App(new JavaFXView());
+        //return new App(new ConsoleView());
     }
 
     private void startApp() throws IOException {

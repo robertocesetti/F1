@@ -3,7 +3,6 @@ package it.unicam.cs.pa2021.f1.model;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  * Interfaccia che definisce l'intero piano di gara.
  *
@@ -68,8 +67,7 @@ public interface RacingPlan<R, P> {
      *
      * @param racingVehicle il veicolo da corsa da aggiungere.
      * @param gridPosition  la posizione di partenza sulla griglia.
-     * @return true se il veicolo e' stato aggiunto correttamente, false altrimenti.
      */
-    boolean addVehicleToGrid(R racingVehicle, int gridPosition);
+    void addVehicleToGrid(R racingVehicle, int gridPosition);
 
 }
