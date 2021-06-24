@@ -12,9 +12,9 @@ import java.util.List;
 public interface Referee<P> {
 
     /**
-     * Restituisce i piloti che gareggiano.
+     * Restituisce la lista di piloti che gareggiano.
      *
-     * @return i piloti che gareggiano.
+     * @return la lista di piloti che gareggiano.
      */
     List<DefaultPilot> getPilots();
 

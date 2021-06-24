@@ -18,9 +18,7 @@ public class DefaultMasterController implements MasterController<RacingPlanReade
     private Image carPlayer;
     private Image carBot;
 
-    public DefaultMasterController() {
-
-    }
+    public DefaultMasterController() { }
 
     @Override
     public void newGame(String path) throws IOException {
@@ -58,12 +56,12 @@ public class DefaultMasterController implements MasterController<RacingPlanReade
     /**
      * Effettua lo spostamento del veicolo del pilota.
      *
-     * @param pilot    il pilota possessore del veicolo da muovere.
+     * @param pilot    il pilota che possiede del veicolo da muovere.
      * @param position la posizione nella quale verra' messo il veicolo.
-     * @throws IllegalArgumentException se la posizione passata non e' valida
+     * @throws IllegalArgumentException se la posizione passata non e' valida.
      * @throws NullPointerException     se la posizione o il veicolo e' nullo.
      */
-    public void setRacingVehicleMovemenet(DefaultPilot pilot, DefaultPosition position) throws IllegalArgumentException, NullPointerException {
+    public void setRacingVehicleMovement(DefaultPilot pilot, DefaultPosition position) throws IllegalArgumentException, NullPointerException {
         DefaultRacingVehicle vehicle = pilot.getRacingVehicle();
         if (position == null) position = botController.botNextPosition(vehicle);
         gameEngine.moveRacingVehicle(vehicle, position);

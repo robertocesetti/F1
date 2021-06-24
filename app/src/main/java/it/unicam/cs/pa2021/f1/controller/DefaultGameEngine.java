@@ -19,7 +19,7 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
     /**
      * Costruttore del motore di gioco.
      *
-     * @param racingPlan il piana gara sul quale agisce il motore di gioco.
+     * @param racingPlan il piano gara sul quale agisce il motore di gioco.
      */
     public DefaultGameEngine(DefaultRacingPlan racingPlan) {
         this.racingPlan = racingPlan;

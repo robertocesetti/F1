@@ -96,7 +96,7 @@ public class ConsoleView implements View {
             try {
                 System.out.println("\n");
                 DefaultPilot pilot = masterController.getReferee().pilotTurn();
-                masterController.setRacingVehicleMovemenet(pilot, positionByPilot(pilot));
+                masterController.setRacingVehicleMovement(pilot, positionByPilot(pilot));
                 printRacingPlanConsole();
             } catch (IllegalArgumentException e) {
                 System.out.println("Eccezione: " + e.getMessage());

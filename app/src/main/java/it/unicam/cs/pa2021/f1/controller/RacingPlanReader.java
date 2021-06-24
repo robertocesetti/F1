@@ -92,7 +92,5 @@ public class RacingPlanReader implements FileReader<DefaultRacingPlan> {
         read(filePath);
     }
 
-    public String getPath() {
-        return path;
-    }
+    public String getPath() { return path; }
 }

@@ -104,7 +104,7 @@ public class JavaFXController implements PrincipleController {
                     nearPositions(pilot);
                     return;
                 } else {
-                    masterController.setRacingVehicleMovemenet(pilot, null);
+                    masterController.setRacingVehicleMovement(pilot, null);
                     setCanvas();
                 }
             } catch (IllegalArgumentException e) {
@@ -137,7 +137,7 @@ public class JavaFXController implements PrincipleController {
             return false;
         }).findFirst();
         if (position.isPresent()) {
-            masterController.setRacingVehicleMovemenet(masterController.getReferee().pilotTurn(), position.get());
+            masterController.setRacingVehicleMovement(masterController.getReferee().pilotTurn(), position.get());
             setCanvas();
             this.gameLoop();
         } else {

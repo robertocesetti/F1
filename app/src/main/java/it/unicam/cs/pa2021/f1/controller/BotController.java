@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Implementazione di default di un controller per il bot.
+ * Implementazione di default di un controller per il giocatore bot.
  * Ha la responsabilita' di calcolare la posizione che il veicolo del bot dovra' raggiungere.
  */
 public class BotController implements BotIA {
