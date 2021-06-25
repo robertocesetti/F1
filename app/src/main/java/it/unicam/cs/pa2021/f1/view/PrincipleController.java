@@ -22,8 +22,8 @@ public interface PrincipleController {
      */
     default void generateErrorAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Attenzione!!!!");
-        alert.setHeaderText("Sono stati riscontrati dei problemi:");
+        alert.setTitle("Attention!!!!");
+        alert.setHeaderText("Problems have been found:");
         alert.setContentText(msg);
         alert.showAndWait();
     }
@@ -35,7 +35,7 @@ public interface PrincipleController {
      */
     default void generateSuccessAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Arrivederci");
+        alert.setTitle("Bye-Bye!!");
         alert.setHeaderText(msg);
         alert.showAndWait();
     }

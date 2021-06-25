@@ -141,11 +141,11 @@ public class JavaFXController implements PrincipleController {
             setCanvas();
             this.gameLoop();
         } else {
-            generateErrorAlert("Posizione selezionata non valida.");
+            generateErrorAlert("Invalid position selected, try again!");
         }
     }
 
     private void finish() {
-        generateSuccessAlert("Partita terminata!");
+        generateSuccessAlert("Game ended!");
     }
 }

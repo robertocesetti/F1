@@ -52,7 +52,7 @@ public class GameSettingsController implements PrincipleController {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File ", "*.png"));
         File file = fc.showOpenDialog(null);
         if (file == null) {
-            generateErrorAlert("File selezionato non valido, riselezionare!");
+            generateErrorAlert("The selected file is invalid, select again!");
         } else {
             this.path = file.getAbsolutePath();
             LOGGER.info(path);
@@ -103,11 +103,11 @@ public class GameSettingsController implements PrincipleController {
     @FXML
     public void startGame(ActionEvent actionEvent) {
         if (numberOfPlayer + numberOfBots < 2) {
-            generateSuccessAlert("Non ci sono abbastanza giocatori");
+            generateErrorAlert("There aren't enough players");
             return;
         }
         if (this.path == null) {
-            generateSuccessAlert("Il path passato non e' valido");
+            generateErrorAlert("Invalid path");
             return;
         }
         try {
@@ -116,7 +116,7 @@ public class GameSettingsController implements PrincipleController {
             configureBot();
             doClose(actionEvent);
         } catch (IOException e) {
-            generateSuccessAlert("File non trovato.");
+            generateErrorAlert("File not found.");
             this.path = null;
         }
     }
