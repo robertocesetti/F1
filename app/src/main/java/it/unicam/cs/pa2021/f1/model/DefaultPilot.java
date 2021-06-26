@@ -16,6 +16,7 @@ public class DefaultPilot implements Pilot<DefaultRacingVehicle> {
      *
      * @param name          il nome del pilota.
      * @param racingVehicle il veicolo del pilota.
+     * @param type          il tipo del pilota.
      */
     public DefaultPilot(String name, DefaultRacingVehicle racingVehicle, PilotType type) {
         this.name = name;

@@ -45,6 +45,7 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
      * se le posizioni raggiungibili da quest'ultimo non fanno parte della pista.
      *
      * @param racingVehicle il veicolo.
+     * @return le lista di posizioni raggiungibili corrette.
      */
     public List<DefaultPosition> allNearPosition(DefaultRacingVehicle racingVehicle) {
         List<DefaultPosition> positions = filteredNearPositions(racingVehicle);
@@ -100,9 +101,9 @@ public class DefaultGameEngine implements GameEngine<DefaultRacingVehicle, Defau
                 this.right(traslateX, traslateY)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
     }
 
-    /**
-     * Metodi che restituiscono le singole posizioni vicine alla posizione data.
-     */
+
+     // Metodi che restituiscono le singole posizioni vicine alla posizione data.
+
 
     public Optional<DefaultPosition> center(int x, int y) {
         return near(x, y, 0, 0);
